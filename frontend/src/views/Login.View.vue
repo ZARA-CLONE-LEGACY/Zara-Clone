@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-// import axios from 'axios';
+import axios from 'axios';
 
 interface User {
   useremail: string;
@@ -43,29 +43,28 @@ export default defineComponent({
   },
   methods: {
     async handleSubmit(): Promise<void> {
-    //   try {
-    //     const user: User = {
-    //       useremail: this.useremail,
-    //       userpw: this.userpw,
-    //     };
+      try {
+        const user: User = {
+          useremail: this.useremail,
+          userpw: this.userpw,
+        };
 
-    //     const res = await axios.post('http://localhost:5000/api/user/login', user, {
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     });
+        const res = await axios.post('http://localhost:5000/api/user/login', user, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-    //     window.localStorage.setItem('User', JSON.stringify(res.data));
-    //     this.Error = 'Authentication successful';
-    //     window.location.href = '/';
-    //   } catch (err) {
-    //     console.log(err.response.data);
-    //     this.Error = err.response.data;
-    //   }
-    // },
+        window.localStorage.setItem('User', JSON.stringify(res.data));
+        this.Error = 'Authentication successful';
+        window.location.href = '/';
+      } catch (err) {
+        console.log(err);
+      }
+    },
    }
  }
-});
+);
 </script>
 
 <style scoped>
