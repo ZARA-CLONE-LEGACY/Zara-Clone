@@ -23,7 +23,7 @@
             />
           </div>
   
-          <!-- <button class="login-btn" @click="handleSubmit">LOGIN</button> -->
+          <button class="login-btn">LOGIN</button>
           <br />
           <p>{{ Error }}</p>
           <br />
@@ -56,31 +56,7 @@
       const Error = ref('');
       const username = ref('LOG IN');
   
-      // const handleSubmit = async () => {
-      //   const user = {
-      //     useremail: useremail.value,
-      //     userpw: userpw.value,
-      //   };
-  
-      //   try {
-      //     const res = await axios.post(
-      //       'http://localhost:5000/api/user/login',
-      //       user,
-      //       {
-      //         headers: {
-      //           'Content-Type': 'application/json',
-      //         },
-      //       }
-      //     );
-      //     window.localStorage.setItem('User', JSON.stringify(res.data));
-      //     Error.value = 'Authentication successful';
-      //     window.location.href = '/';
-      //   } catch (err: any) {
-      //     console.log(err.response.data);
-      //     Error.value = err.response.data;
-      //   }
-      // };
-  
+     
       return {
         useremail,
         userpw,
