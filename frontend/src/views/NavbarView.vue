@@ -46,7 +46,7 @@
             <span class="menuLink">LOG IN</span>
           </router-link>
           <router-link
-            to="/help"
+            to="/Help"
             style="text-decoration: none; padding: 0px 10px 0px 10px; font-size: 13px; color: rgb(41, 41, 41); font-weight: 100; font-family: Neue-Helvetica, Helvetica, Arial, Sans-Serif; font-stretch: ultra-condensed;"
           >
             <span class="menuLink">HELP</span>
