@@ -8,7 +8,7 @@
 
 <script lang="ts">
 
-import Navbar from './views/NavbarView.vue';
+import Navbar from './components/Navbar.vue';
 
 export default {
 name: 'nav', 
