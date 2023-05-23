@@ -1,17 +1,20 @@
 <template>
   <div id="app">
     <Login />
+    <Sign_Up />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Login from './components/Authentication/Login.vue';
+import Sign_Up from './components/Authentication/Sign_Up.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
     Login,
+    Sign_Up
   },
 });
 </script>
