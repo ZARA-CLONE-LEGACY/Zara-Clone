@@ -1,6 +1,15 @@
-<template>
+<!-- <template>
   <div class="help">
     <h4 class="head">HOW CAN WE HELP YOU?</h4>
+    <ul>
+      <li v-for="question in questions" :key="question._id">
+        {{ question.question }}
+      </li>
+    </ul>
+    <div v-if="selectedQuestion">
+      <h2>Selected Question</h2>
+      <p>{{ selectedQuestion.question }}</p>
+    </div>
     <input
       type="text"
       class="searchbar"
@@ -13,34 +22,78 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import axios from 'axios';
 
-interface Help {
+interface HelpQuestion {
+  _id: string;
   question: string;
-  answer: string;
 }
 
 export default defineComponent({
-  name: 'Helpbar',
   setup() {
-    const query = ref('');
-    const help = ref<Help[]>([]);
+    const questions = ref<HelpQuestion[]>([]);
+    const selectedQuestion = ref<HelpQuestion | null>(null);
 
-    const fetchHelp = async () => {
+    onMounted(async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/help/${query.value}`);
-        help.value = response.data;
-        console.log(help)
+        const response = await axios.get(`http://localhost:5000/help/${selectedQuestion}`);
+        questions.value = response.data;
       } catch (error) {
         console.error(error);
+        // Handle error
+      }
+    });
+
+    const fetchQuestion = async (questionId: string) => {
+      try {
+        const response = await axios.get(`/api/help/${questionId}`);
+        selectedQuestion.value = response.data;
+      } catch (error) {
+        console.error(error);
+        // Handle error
       }
     };
 
-    onMounted(() => {
-      fetchHelp();
-    });
+    return {
+      questions,
+      selectedQuestion,
+      fetchQuestion,
+    };
+  },
+});
+</script> -->
+<template>
+  <div class="help">
+    <h1>Help</h1>
+    <input  type="text"
+      class="searchbar" v-model="typedQuestion" placeholder="Type your question" />
+    <button @click="fetchAnswer">Get Answer</button>
+    <p v-if="answer">{{ answer }}</p>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import axios from 'axios';
+
+export default defineComponent({
+  setup() {
+    const typedQuestion = ref('');
+    const answer = ref('');
+
+    const fetchAnswer = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/help/${typedQuestion.value}`);
+        answer.value = response.data.answer;
+        console.log(answer)
+      } catch (error) {
+        console.error(error);
+        // Handle error
+      }
+    };
 
     return {
-      help,
-      fetchHelp,
+      typedQuestion,
+      answer,
+      fetchAnswer,
     };
   },
 });
