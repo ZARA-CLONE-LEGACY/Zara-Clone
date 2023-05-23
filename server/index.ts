@@ -5,7 +5,8 @@ import { register, login } from "./routes/user";
 import clothesRoutes from "./routes/clothes";
 import menRoutes from "./routes/men";
 import womenRoutes from "./routes/women";
-import kidsRoutes from "./routes/kids"
+import kidsRoutes from "./routes/kids";
+import Help from "./routes/help";
 import cors from 'cors';
 
 
@@ -23,6 +24,7 @@ app.use("/clothes", clothesRoutes);
 app.use("/men", menRoutes);
 app.use("/women", womenRoutes);
 app.use("/kids", kidsRoutes);
+app.use("/help",Help);
 
 mongoose
   .connect("mongodb+srv://messud:azerty123@seniordata.sg77wxf.mongodb.net/?retryWrites=true&w=majority")
