@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="container">
+    <form class="container" @submit="handleSubmit">
       <div class="left-form">
         <h2 class="headingform">PERSONAL DETAILS</h2>
         <input
@@ -8,14 +8,14 @@
           type="text"
           name="email"
           placeholder="E-MAIL"
-          v-model="useremail" />
+          v-model="email" />
         <div class="input-text-box">
           <input
             class="input-text"
             type="password"
             name="password"
             placeholder="PASSWORD"
-            v-model="userpw" />
+            v-model="password" />
         </div>
         <div class="input-text-box">
           <input
@@ -23,7 +23,7 @@
             type="text"
             name="fname"
             placeholder="NAME"
-            v-model="username" />
+            v-model="fname" />
         </div>
         <div class="checkbox">
           <div>
@@ -54,9 +54,9 @@
           </div>
         </div>
         <input type="submit" class="signupbtn" value="CREATE ACCOUNT" />
-        <button class="signupbtn">LOGIN</button>
+         
         <router-link to="/login" class="form-link"
-          >Already have an account? Login here.</router-link
+          >Already have an account?</router-link
         >
       </div>
       <div class="right-form">
@@ -69,7 +69,7 @@
             type="password"
             name="fname"
             placeholder="REPEAT PASSWORD"
-            v-model="confirmuserpw" />
+            v-model="confirmpassword" />
         </div>
         <div class="input-text-box">
           <input
@@ -77,7 +77,7 @@
             type="text"
             name="fname"
             placeholder="SURNAME"
-            v-model="userlastname" />
+            v-model="lname" />
         </div>
         <div class="input-text-box"></div>
       </div>
@@ -88,23 +88,24 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
 
 interface User {
-  username: string;
-  userlastname: string;
-  useremail: string;
-  userpw: string;
+  fname: string;
+  lname: string;
+  email: string;
+  password: string;
 }
 
 export default defineComponent({
   name: "SignupForm",
   data() {
     return {
-      useremail: "",
-      userpw: "",
-      confirmuserpw: "",
-      username: "",
-      userlastname: "",
+      email: "",
+      password: "",
+      confirmpassword: "",
+      fname: "",
+      lname: "",
       error: "",
     };
   },
@@ -113,15 +114,15 @@ export default defineComponent({
       event.preventDefault();
 
       const newUser: User = {
-        username: this.username,
-        userlastname: this.userlastname,
-        useremail: this.useremail,
-        userpw: this.userpw,
+        fname: this.fname,
+        lname: this.lname,
+        email: this.email,
+        password: this.password,
       };
 
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/user/signup",
+          "http://localhost:5000/register",
           newUser,
           {
             headers: {
@@ -130,7 +131,8 @@ export default defineComponent({
           },
         );
         window.localStorage.setItem("User", JSON.stringify(res.data));
-        window.location.href = "/";
+
+       window.location.href = '/login'
       } catch (err) {
         console.error(err);
         this.error = "An error occurred during signup";
@@ -142,7 +144,7 @@ export default defineComponent({
 
 <style scoped>
 .container {
-  width: 100%;
+  width: 80%;
   display: flex;
   margin: 5%;
   height: 60%;
@@ -195,7 +197,7 @@ input {
   width: 85%;
   background-color: white;
   color: rgb(6, 6, 6);
-  margin-top: 16%;
+  margin-top: 5%;
   display: flex;
   flex-flow: column nowrap;
   padding: 14px 28px;
@@ -208,7 +210,8 @@ input {
 }
 
 .right-form {
-  width: 40%;
+  width: 30%;
+  margin-top: 170px ;
 }
 
 .dot {
@@ -235,12 +238,12 @@ input {
   font-weight: bold;
   justify-content: space-between;
   margin-left: 70px;
-  margin-top: 50px;
+  margin-top: 170px;
 }
 
 .signup-footer {
   display: flex;
-  width: 40%;
+  width: 30%;
   justify-content: space-between;
   margin: 8%;
 }
