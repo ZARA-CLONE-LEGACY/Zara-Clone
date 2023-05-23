@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="container">
+    <form class="container" @submit="handleSubmit">
       <div class="left-form">
         <h2 class="headingform">PERSONAL DETAILS</h2>
         <input
@@ -54,9 +54,9 @@
           </div>
         </div>
         <input type="submit" class="signupbtn" value="CREATE ACCOUNT" />
-        <button class="signupbtn">LOGIN</button>
+         
         <router-link to="/login" class="form-link"
-          >Already have an account? Login here.</router-link
+          >Already have an account?</router-link
         >
       </div>
       <div class="right-form">
@@ -88,6 +88,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
 
 interface User {
   fname: string;
@@ -130,7 +131,8 @@ export default defineComponent({
           },
         );
         window.localStorage.setItem("User", JSON.stringify(res.data));
-        window.location.href = "/";
+
+       window.location.href = '/login'
       } catch (err) {
         console.error(err);
         this.error = "An error occurred during signup";
@@ -142,7 +144,7 @@ export default defineComponent({
 
 <style scoped>
 .container {
-  width: 100%;
+  width: 80%;
   display: flex;
   margin: 5%;
   height: 60%;
@@ -195,7 +197,7 @@ input {
   width: 85%;
   background-color: white;
   color: rgb(6, 6, 6);
-  margin-top: 16%;
+  margin-top: 5%;
   display: flex;
   flex-flow: column nowrap;
   padding: 14px 28px;
@@ -208,7 +210,8 @@ input {
 }
 
 .right-form {
-  width: 40%;
+  width: 30%;
+  margin-top: 170px ;
 }
 
 .dot {
@@ -235,12 +238,12 @@ input {
   font-weight: bold;
   justify-content: space-between;
   margin-left: 70px;
-  margin-top: 50px;
+  margin-top: 170px;
 }
 
 .signup-footer {
   display: flex;
-  width: 40%;
+  width: 30%;
   justify-content: space-between;
   margin: 8%;
 }

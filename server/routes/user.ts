@@ -13,6 +13,7 @@ const generateToken = (user: UserDocument): string => {
 const register = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { fname, lname, email, password } = req.body;
+    console.log(req.body)
 
     let user = await User.findOne({ email });
 
@@ -23,11 +24,13 @@ const register = async (req: Request, res: Response): Promise<Response> => {
     }
 
     const is_admin = req.body.is_admin || false; 
-    user = await User.create({ fname, lname, email, password, is_admin });
+    const newUser = new User({ fname, lname, email, password, is_admin });
+    await newUser.save()
 
-    const token = generateToken(user);
+    const token = generateToken(newUser);
     return res.status(200).send({ user, token, status: true });
   } catch (err: any) {
+    console.log(err)
     return res.status(400).send({ message: err.message });
   }
 };
