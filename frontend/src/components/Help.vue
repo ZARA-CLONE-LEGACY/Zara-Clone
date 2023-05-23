@@ -12,26 +12,23 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue';
 import axios from 'axios';
-import Navbar from '@/components/Navbar/Navbar.vue';
 
 interface Help {
-  question?: string;
-  answer?: string;
+  question: string;
+  answer: string;
 }
 
 export default defineComponent({
   name: 'Helpbar',
-  components: {
-    Navbar,
-  },
   setup() {
     const query = ref('');
     const help = ref<Help[]>([]);
 
     const fetchHelp = async () => {
       try {
-        const response = await axios.get(`localhost:5000/help/${query.value}`);
+        const response = await axios.get(`http://localhost:5000/help/${query.value}`);
         help.value = response.data;
+        console.log(help)
       } catch (error) {
         console.error(error);
       }
@@ -42,7 +39,6 @@ export default defineComponent({
     });
 
     return {
-      query,
       help,
       fetchHelp,
     };
