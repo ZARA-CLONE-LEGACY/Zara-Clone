@@ -4,8 +4,8 @@
       <div class="Left-login-form" style="margin-top: 40vh;">
         <h3 class="login-heading">LOG IN TO YOUR ACCOUNT</h3>
         <div class="form-input-label">
-          <input class="form-input-label" type="text" id="fname" name="email" placeholder="E-MAIL" v-model="useremail" />
-          <input class="form-input-label" type="password" id="fname" name="password" placeholder="PASSWORD" style="outline:none;border:none" v-model="userpw" />
+          <input class="form-input-label" type="text" id="fname" name="email" placeholder="E-MAIL" v-model="email" />
+          <input class="form-input-label" type="password" id="fname" name="password" placeholder="PASSWORD" style="outline:none;border:none" v-model="password" />
         </div>
 
         <button class="login-btn" @click="handleSubmit">LOGIN</button>
@@ -28,16 +28,16 @@ import { defineComponent, ref } from 'vue';
 import axios from 'axios';
 
 interface User {
-  useremail: string;
-  userpw: string;
+  email: string;
+  password: string;
 }
 
 export default defineComponent({
   name: 'Login',
   data() {
     return {
-      useremail: '',
-      userpw: '',
+      email: '',
+      password: '',
       Error: '',
     };
   },
@@ -45,11 +45,11 @@ export default defineComponent({
     async handleSubmit(): Promise<void> {
       try {
         const user: User = {
-          useremail: this.useremail,
-          userpw: this.userpw,
+          email: this.email,
+          password: this.password,
         };
 
-        const res = await axios.post('http://localhost:5000/api/user/login', user, {
+        const res = await axios.post('http://localhost:5000/login', user, {
           headers: {
             'Content-Type': 'application/json',
           },
