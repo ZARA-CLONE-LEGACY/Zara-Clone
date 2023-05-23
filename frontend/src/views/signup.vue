@@ -8,14 +8,14 @@
           type="text"
           name="email"
           placeholder="E-MAIL"
-          v-model="useremail" />
+          v-model="email" />
         <div class="input-text-box">
           <input
             class="input-text"
             type="password"
             name="password"
             placeholder="PASSWORD"
-            v-model="userpw" />
+            v-model="password" />
         </div>
         <div class="input-text-box">
           <input
@@ -23,7 +23,7 @@
             type="text"
             name="fname"
             placeholder="NAME"
-            v-model="username" />
+            v-model="fname" />
         </div>
         <div class="checkbox">
           <div>
@@ -69,7 +69,7 @@
             type="password"
             name="fname"
             placeholder="REPEAT PASSWORD"
-            v-model="confirmuserpw" />
+            v-model="confirmpassword" />
         </div>
         <div class="input-text-box">
           <input
@@ -77,7 +77,7 @@
             type="text"
             name="fname"
             placeholder="SURNAME"
-            v-model="userlastname" />
+            v-model="lname" />
         </div>
         <div class="input-text-box"></div>
       </div>
@@ -90,21 +90,21 @@ import { defineComponent } from "vue";
 import axios from "axios";
 
 interface User {
-  username: string;
-  userlastname: string;
-  useremail: string;
-  userpw: string;
+  fname: string;
+  lname: string;
+  email: string;
+  password: string;
 }
 
 export default defineComponent({
   name: "SignupForm",
   data() {
     return {
-      useremail: "",
-      userpw: "",
-      confirmuserpw: "",
-      username: "",
-      userlastname: "",
+      email: "",
+      password: "",
+      confirmpassword: "",
+      fname: "",
+      lname: "",
       error: "",
     };
   },
@@ -113,15 +113,15 @@ export default defineComponent({
       event.preventDefault();
 
       const newUser: User = {
-        username: this.username,
-        userlastname: this.userlastname,
-        useremail: this.useremail,
-        userpw: this.userpw,
+        fname: this.fname,
+        lname: this.lname,
+        email: this.email,
+        password: this.password,
       };
 
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/user/signup",
+          "http://localhost:5000/register",
           newUser,
           {
             headers: {
