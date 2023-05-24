@@ -1,27 +1,24 @@
 import express, { Request, Response } from "express";
-import Men, { MenDocument } from "../models/men";
+import Products from "../models/products";
 import { authenticate ,authorizeAdmin } from "../auth";
-
 const router = express.Router();
 
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const men = await Men.find();
-    res.json(men);
+    const clothes = await Products.find();
+    res.json(clothes);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-router.get("/:id", async (req: Request, res: Response) => {
+router.get("/:name", async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const men = await Men.findById(id);
-    if (!men) {
-      return res.status(404).json({ error: "Men not found" });
+    const clothes = await Products.findOne({ name : req.params.name });
+    if (!clothes) {
+      return res.status(404).json({ error: "clothes not found" });
     }
-    res.json(men);
+    res.json(clothes);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -31,8 +28,8 @@ router.get("/:id", async (req: Request, res: Response) => {
 router.post("/", authenticate, authorizeAdmin, async (req: Request, res: Response) => {
   try {
     const { image, name, gen, price, desc } = req.body;
-    const men = await Men.create({ image, name, gen, price, desc });
-    res.status(201).json(men);
+    const clothes = await Products.create({ image, name, gen, price, desc });
+    res.status(201).json(clothes);
   } catch (error) {
     res.status(400).json({ error: "Bad request" });
   }
@@ -43,11 +40,11 @@ router.put("/:id", authenticate, authorizeAdmin, async (req: Request, res: Respo
   try {
     const { id } = req.params;
     const { image, name, gen, price, desc } = req.body;
-    const men = await Men.findByIdAndUpdate(id, { image, name, gen, price, desc }, { new: true });
-    if (!men) {
-      return res.status(404).json({ error: "Men not found" });
+    const clothes = await Products.findByIdAndUpdate(id, { image, name, gen, price, desc }, { new: true });
+    if (!clothes) {
+      return res.status(404).json({ error: "clothes not found" });
     }
-    res.json(men);
+    res.json(clothes);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -57,25 +54,15 @@ router.put("/:id", authenticate, authorizeAdmin, async (req: Request, res: Respo
 router.delete("/:id", authenticate, authorizeAdmin, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const men = await Men.findByIdAndDelete(id);
-    if (!men) {
-      return res.status(404).json({ error: "Men not found" });
+    const clothes = await Products.findByIdAndDelete(id);
+    if (!clothes) {
+      return res.status(404).json({ error: "clothes not found" });
     }
-    res.json({ message: "Men deleted successfully" });
+    res.json({ message: "clothes deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.get("/", async (req: Request, res: Response) => {
-  try {
-    const { query } = req.query;
-const searchString = String(query);
-const results = await Men.find({ $text: { $search: searchString } });
-    res.json(results);
-  } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
 
 export default router;

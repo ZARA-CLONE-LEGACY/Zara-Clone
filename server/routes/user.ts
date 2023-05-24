@@ -9,6 +9,14 @@ const { SECRET_KEY } = process.env;
 const generateToken = (user: UserDocument): string => {
   return jwt.sign({ user }, SECRET_KEY || "");
 };
+const getAll = async (req: Request, res: Response) => {
+  try {
+    const user = await User.find();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 const register = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -67,4 +75,4 @@ const isAdmin = (user: UserDocument): boolean => {
   return user.is_admin;
 };
 
-export { register, login, isAdmin };
+export { register, login, isAdmin, getAll };
