@@ -1,9 +1,8 @@
 import express, {  Request, Response } from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import { register, login, getAll } from "./routes/user";
+import { register, login, getAll,addToCart} from "./routes/user";
 import products from "./routes/products";
-import Cart from "./routes/cart"
 import Help from "./routes/help";
 import cors from 'cors';
 
@@ -19,9 +18,10 @@ app.use(bodyParser.json());
 app.use("/user",getAll)
 app.post("/register", register);
 app.post("/login", login);
+app.post("/add",addToCart);
 app.use("/product", products);
 app.use("/help",Help);
-app.use("/cart",Cart);
+
 
 mongoose
 .connect("mongodb+srv://mongo:rootroot@mydatabase1.ihaxueo.mongodb.net/zara")

@@ -27,8 +27,8 @@ router.get("/:&name", async (req: Request, res: Response) => {
 
 router.post("/", authenticate, authorizeAdmin, async (req: Request, res: Response) => {
   try {
-    const { image, name, gen, price, desc } = req.body;
-    const clothes = await Products.create({ image, name, gen, price, desc });
+    const { image, name, quantity, price, gender, category, color } = req.body;
+    const clothes = await Products.create({ image, name, quantity, price, gender, category, color });
     res.status(201).json(clothes);
   } catch (error) {
     res.status(400).json({ error: "Bad request" });
