@@ -1,33 +1,30 @@
 import express, {  Request, Response } from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import { register, login } from "./routes/user";
-import clothesRoutes from "./routes/clothes";
-import menRoutes from "./routes/men";
-import womenRoutes from "./routes/women";
-import kidsRoutes from "./routes/kids";
+import { register, login, getAll } from "./routes/user";
+import products from "./routes/products";
+import Cart from "./routes/cart"
 import Help from "./routes/help";
 import cors from 'cors';
 
 
 const app  = express();
 app.use(cors());
-const PORT = 5000;
+const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
 app.use(bodyParser.json());
+app.use("/user",getAll)
 app.post("/register", register);
 app.post("/login", login);
-app.use("/clothes", clothesRoutes);
-app.use("/men", menRoutes);
-app.use("/women", womenRoutes);
-app.use("/kids", kidsRoutes);
+app.use("/product", products);
 app.use("/help",Help);
+app.use("/cart",Cart);
 
 mongoose
-  .connect("mongodb+srv://messud:azerty123@seniordata.sg77wxf.mongodb.net/?retryWrites=true&w=majority")
+.connect("mongodb+srv://mongo:rootroot@mydatabase1.ihaxueo.mongodb.net/zara")
   .then(() => {
     console.log("Connected to MongoDB");
   })

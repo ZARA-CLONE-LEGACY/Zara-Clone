@@ -3,6 +3,7 @@ import Login from '../components/Login.vue'
 import HomeView from '../components/Home.vue'
 import Signup from '../components/Signup.vue'
 import Help from '../components/Help.vue'
+import ProductDetails from '../components/ProductDetails.vue'
 import Search from '../components/Search.vue'
 const routes = [
   { path: '/', component : HomeView }, 

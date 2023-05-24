@@ -1,5 +1,6 @@
 import mongoose, { Document } from "mongoose";
 import bcrypt from "bcrypt";
+import { CartDocument } from "./cart";
 
 export interface UserDocument extends Document {
   fname: string;
@@ -7,6 +8,7 @@ export interface UserDocument extends Document {
   email: string;
   password: string;
   is_admin: boolean;
+  cart: CartDocument;
   checkPassword(password: string): boolean;
 }
 
@@ -17,6 +19,7 @@ const userSchema = new mongoose.Schema<UserDocument>(
     email: { type: String, required: true },
     password: { type: String, required: true },
     is_admin: { type: Boolean },
+    cart: { type: mongoose.Schema.Types.ObjectId, ref: "Cart" },
   },
   {
     versionKey: false,
@@ -34,5 +37,5 @@ userSchema.methods.checkPassword = function (password: string) {
   return bcrypt.compareSync(password, this.password);
 };
 
-const User = mongoose.model<UserDocument>("user", userSchema);
+const User = mongoose.model<UserDocument>("User", userSchema);
 export default User;
