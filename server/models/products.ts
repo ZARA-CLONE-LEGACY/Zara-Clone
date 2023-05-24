@@ -1,15 +1,12 @@
 import mongoose, { Document } from "mongoose";
-import { CartDocument } from "./cart";
 
 export interface ProductsDocument extends Document {
   image: string;
   name: string;
-  desc: string;
   price: string;
   quantity: Number;
   gender: String;
   category: String;
-  cart: CartDocument;
 }
 
 const productSchema = new mongoose.Schema<ProductsDocument>(
@@ -20,7 +17,6 @@ const productSchema = new mongoose.Schema<ProductsDocument>(
     quantity: { type: Number, required: true },
     gender: { type: String, required: true },
     category: { type: String, required: true },
-    cart: { type: mongoose.Schema.Types.ObjectId, ref: "Cart" },
   },
   {
     versionKey: false,
