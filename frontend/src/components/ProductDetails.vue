@@ -7,39 +7,45 @@
           <p>Care for water produced using less water.</p>
           <br />
           <p>
-            COMPOSITION & CARE
-            To assess compliance, we have developed a programme of audits and continuous improvement plans.
+            COMPOSITION & CARE To assess compliance, we have developed a programme
+            of audits and continuous improvement plans.
           </p>
           <br />
   
           <h2>MATERIALS</h2>
           <p>
-            We work with monitoring programmes to ensure compliance with our social, environmental and health and safety standards for our garments.
+            We work with monitoring programmes to ensure compliance with our
+            social, environmental and health and safety standards for our
+            garments.
           </p>
           <br />
-          <p>The Green to Wear 2.0 standard aims to minimize the environmental impact.</p>
+          <p>
+            The Green to Wear 2.0 standard aims to minimize the environmental
+            impact.
+          </p>
           <a href="">
             <p>View more</p>
           </a>
         </div>
         <div class="containerprod">
           <div class="img1">
-            <img class="centerimgprod" :src="data[0].productimage" alt="Product Image" />
+            <img class="centerimgprod" :src="data[0].image" alt="Product Image" />
           </div>
         </div>
         <div>
-          <div class="right" style="marginRight: 40px;">
-            <h2 class="cat">{{ data[0].productname }}</h2>
+          <div class="right">
+            <h2>{{ data[0].name }}</h2>
             <h3>
-              Lapelless blazer made of a linen blend fabric. Long sleeves. Flap pockets on the front. Tie belt in the same fabric. Matching lining.
+              Lapelless blazer made of a linen blend fabric. Long sleeves. Flap
+              pockets on the front. Tie belt in the same fabric. Matching lining.
               Double-breasted fastening with hidden button.
             </h3>
             <br />
   
-            <span><p class="pricetag">{{ data[0].productprice }}$</p></span>
+            <span><p class="pricetag">{{ data[0].price }}$</p></span>
             <p>MRP incl. of all taxes</p>
             <br />
-            <p>{{ data[0].productcolor }} | 0647/301</p>
+            <p>{{ data[0].color }} | 0647/301</p>
             <br />
             <select name="" id="prodsize">
               <option value="null">Select your size</option>
@@ -50,150 +56,172 @@
               <option value="EU 44 (UK 34)">EU 44 (UK 34)</option>
             </select>
   
-            <button @click="handleAdd">Add to bag</button>
-  
             <button>Process order</button>
   
-            <p>
-              CHECK IN-STORE AVAILABILITY
-              DELIVERY, EXCHANGES AND RETURNS
-            </p>
+            <p>CHECK IN-STORE AVAILABILITY DELIVERY, EXCHANGES AND RETURNS</p>
           </div>
         </div>
-      </div>
-  
-      <!-- Comment Section -->
-      <div class="comment-section">
-        <h2>Comments</h2>
-        <div v-for="comment in comments" :key="comment.id">
-          <p>{{ comment.text }}</p>
-          <hr />
-        </div>
-        <div>
-          <input type="text" v-model="newComment" placeholder="Add a comment" />
-          <button @click="addComment">Submit</button>
-        </div>
-      </div>
-  
-      <!-- Review Section -->
-      <div class="review-section">
-        <h2>Reviews</h2>
-        <div class="stars">
-          <span
-            class="star"
-            v-for="star in 5"
-            :key="star"
-            :class="{ 'selected': star <= selectedRating }"
-            @mouseover="hoverRating(star)"
-            @mouseleave="resetRating"
-            @click="selectedRating(star)"
-          >
-            ★
-          </span>
-        </div>
-        <p>Selected Rating: {{ selectedRating }}</p>
       </div>
     </div>
   </template>
   
-
-<script lang="ts">
-import { defineComponent } from "vue";
-import axios from "axios";
-import { addComment } from "@babel/types";
-
-interface Product {
-  productname: string;
-  productprice: number;
-  productquantity: number;
-  productcolor: string;
-  productcategory: string;
-  "productsub-category": string;
-  "productsub-sub-category": string;
-  productimage: string;
-  orderid: number;
-}
-
-interface Comment {
-  id: string;
-  text: string;
-}
-
-export default defineComponent({
-  data() {
-    return {
-      data: [] as Product[],
-      comments: [] as Comment[],
-      newComment: "",
-      selectedRating: 0,
-    };
-  },
-  mounted() {
-    const name = window.location.pathname.split("/")[2];
-    if (name) {
-      axios
-        .get<Product[]>(`http://localhost:5000/api/products/one/${name}`)
-        .then((res) => {
-          this.data = res.data;
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
-    }
-  },
-  methods: {
-    handleAdd() {
-      console.log("Add to bag button clicked");
-      const prod: Product = {
-        productname: this.data[0]?.productname || "",
-        productprice: this.data[0]?.productprice || 0,
-        productquantity: this.data[0]?.productquantity || 0,
-        productcolor: this.data[0]?.productcolor || "",
-        productcategory: this.data[0]?.productcategory || "",
-        "productsub-category": this.data[0]?.["productsub-category"] || "",
-        "productsub-sub-category":
-          this.data[0]?.["productsub-sub-category"] || "",
-        productimage: this.data[0]?.productimage || "",
-        orderid: 0, // Set the order ID as per your logic
+  <script lang="ts">
+  import { defineComponent } from "vue";
+  import axios from "axios";
+  
+  interface Product {
+    image: string;
+    name: string;
+    price: number;
+    quantity: number;
+    category: string;
+    color: string;
+  }
+  
+  export default defineComponent({
+    data() {
+      return {
+        data: [] as Product[],
       };
-      this.postData(prod);
     },
-    postData(prod: Product) {
-      axios
-        .post("http://localhost:5000/api/products/", prod)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    mounted() {
+      const name = window.location.pathname.split("/")[2];
+      if (name) {
+        axios
+          .get<Product[]>(`http://localhost:3000/api/product/${name}`)
+          .then((res) => {
+            this.data = res.data;
+            console.log(res.data);
+          })
+          .catch((err) => console.log(err));
+      }
     },
-  },
-  ddComment() {
-    const comment: Comment = {
-      id: "comment-" + Date.now().toString(), // Generate a unique ID for the comment
-      text: this.newComment,
-    };
-    this.comments.push(comment);
-    this.newComment = ""; // Clear the input field after submitting the comment
-  },
-
-  // Method to handle hovering over stars for review
-  hoverRating(star: number) {
-    this.selectedRating = star;
-  },
-
-  // Method to reset the selected rating
-  resetRating() {
-    this.selectedRating = 0;
-  },
-
-  // Method to select the rating
-  selectRating(star: number) {
-    this.selectedRating = star;
-  },
-});
-</script>
-
-<style>
-/* Add your CSS styles here */
-</style>
+  });
+  </script>
+  
+  <style>
+  .container {
+    padding-top: 140px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .centerimgprod {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .img1 {
+    margin: auto;
+    margin-top: 5%;
+    max-width: 350px;
+  }
+  
+  .right {
+    margin-top: 70px;
+    width: 230px;
+    height: 320px;
+    padding-top: 100px;
+    flex-basis: 30%;
+  }
+  
+  .left {
+    margin-top: 70px;
+    width: 230px;
+    height: 320px;
+    padding-top: 100px;
+    flex-basis: 30%;
+    margin-right: 40px;
+  }
+  
+  .right,
+  .left,
+  h3,
+  p {
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .right span p {
+    display: inline;
+  }
+  
+  .right button {
+    background-color: rgb(61, 59, 59);
+    color: white;
+    width: 100%;
+    cursor: pointer;
+    height: 30px;
+    margin: 8px 0px;
+  }
+  
+  .right select {
+    background: transparent;
+    padding: 5px;
+    width: 100%;
+  }
+  
+  .right h3 {
+    word-spacing: 2px;
+    line-height: 12px;
+  }
+  
+  /* when add to bag click visibility block */
+  .right button ~ button {
+    visibility: hidden;
+  }
+  
+  /* Additional CSS styles */
+  header {
+    padding: 12px 20px;
+    display: flex;
+    position: fixed;
+  }
+  
+  .fa-bars {
+    font-size: 25px;
+  }
+  
+  .logo {
+    max-width: 100%;
+    height: auto;
+    margin-left: 4%;
+    margin-top: -55px;
+    padding-left: 15%;
+  }
+  
+  .rightnavlogin {
+    margin-top: -16px;
+    display: flex;
+    padding-left: 194%;
+  }
+  
+  a {
+    color: black;
+    user-select: none;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: Neue-Helvetica, Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 26px;
+    font-stretch: semi-condensed;
+    margin-right: 20px;
+  }
+  
+  .price,
+  .new {
+    margin: 4px;
+    margin-left: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    font-stretch: semi-condensed;
+  }
+  </style>
+  
