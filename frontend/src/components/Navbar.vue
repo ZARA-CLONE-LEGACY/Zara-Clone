@@ -173,9 +173,10 @@ export default {
     },
     fetchData() {
       axios
-        .get('http://localhost:5000/api/products/')
+        .get('http://localhost:3000/product/')
         .then(response => {
           this.data = response.data;
+          console.log(this.data)
         })
         .catch(error => {
           console.error(error);
@@ -185,9 +186,6 @@ export default {
   mounted() {
     this.fetchData();
   },
-
-
-  
 };
 </script>
 

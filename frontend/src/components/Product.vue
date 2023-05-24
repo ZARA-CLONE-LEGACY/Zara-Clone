@@ -1,32 +1,25 @@
 <template>
   <div>
-    <div v-for="(product, index) in products" :key="index">
-      <div>
-        <h2>{{ product.name }}</h2>
-        <h2>{{ product.price }}</h2>
-      </div>
+    <div>
+      <h2>{{ element.name }}</h2>
+      <h2>{{ element.price }}</h2>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ClothesDocument } from '../../../server/models/clothes';
+import { ProductsDocument } from '../../../server/models/products';
+import { PropType } from 'vue';
+
 export default defineComponent({
   name: 'Product',
-  data() {
-    return {
-      products: [] as ClothesDocument[]
-    };
+  props: {
+    element: {
+      type: Object as PropType<ProductsDocument>,
+      required: true,
+    },
   },
-  mounted() {
-    this.fetchProductData();
-  },
-  methods: {
-    fetchProductData(): void {
-      const product = this.$route.query.product;
-      this.products = product;
-    }
-  }
 });
 </script>
+
