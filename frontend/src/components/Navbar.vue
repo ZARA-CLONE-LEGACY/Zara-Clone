@@ -124,7 +124,9 @@
 
 <script>
 import axios from 'axios';
-
+import Men from './Men.vue';
+import Woman from './Woman.vue';
+import Kid from './Kid.vue'
 export default {
   data() {
     return {
@@ -135,6 +137,11 @@ export default {
       showKid: false,
       showBeauty: false
     };
+  },
+  components:{
+    Men,
+    Woman,
+    Kid
   },
   methods: {
     toggleMenu() {
