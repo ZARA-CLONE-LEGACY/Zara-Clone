@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ClothesDocument } from '../../../server/models/clothes';
 export default defineComponent({
   name: 'Product',
   data() {
