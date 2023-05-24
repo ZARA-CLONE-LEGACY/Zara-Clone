@@ -17,6 +17,12 @@ const getAll = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+const addToCart=(req: Request, res: Response)=>{
+  const {userId,productId}=req.body
+  console.log(userId, productId);
+  
+  User.findByIdAndUpdate(userId,{$push:{cart:productId}}).then(data=>res.send(data))
+}
 
 const register = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -75,4 +81,4 @@ const isAdmin = (user: UserDocument): boolean => {
   return user.is_admin;
 };
 
-export { register, login, isAdmin, getAll };
+export { register, login, isAdmin, getAll,addToCart };

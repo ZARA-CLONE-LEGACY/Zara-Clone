@@ -1,6 +1,5 @@
 import mongoose, { Document } from "mongoose";
 import bcrypt from "bcrypt";
-import { CartDocument } from "./cart";
 
 export interface UserDocument extends Document {
   fname: string;
@@ -8,7 +7,7 @@ export interface UserDocument extends Document {
   email: string;
   password: string;
   is_admin: boolean;
-  cart: CartDocument;
+  cart: string[];
   checkPassword(password: string): boolean;
 }
 
@@ -19,7 +18,7 @@ const userSchema = new mongoose.Schema<UserDocument>(
     email: { type: String, required: true },
     password: { type: String, required: true },
     is_admin: { type: Boolean },
-    cart: { type: mongoose.Schema.Types.ObjectId, ref: "Cart" },
+    cart:  [String] 
   },
   {
     versionKey: false,
