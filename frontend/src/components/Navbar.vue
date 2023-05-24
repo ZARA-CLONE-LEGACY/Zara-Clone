@@ -173,7 +173,7 @@ export default {
     },
     fetchData() {
       axios
-        .get('http://localhost:5000/api/products/')
+        .get('http://localhost:3000/products/')
         .then(response => {
           this.data = response.data;
         })
