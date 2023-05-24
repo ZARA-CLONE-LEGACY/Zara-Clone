@@ -7,6 +7,9 @@ export interface ProductsDocument extends Document {
   quantity: Number;
   gender: String;
   category: String;
+  color: String;
+  comment: String;
+
 }
 
 const productSchema = new mongoose.Schema<ProductsDocument>(
@@ -17,6 +20,8 @@ const productSchema = new mongoose.Schema<ProductsDocument>(
     quantity: { type: Number, required: true },
     gender: { type: String, required: true },
     category: { type: String, required: true },
+    color: { type: String, required: true },
+    comment: { type: String, required: true },
   },
   {
     versionKey: false,
