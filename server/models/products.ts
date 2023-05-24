@@ -1,10 +1,8 @@
 import mongoose, { Document } from "mongoose";
-import { CartDocument } from "./cart";
 
 export interface ProductsDocument extends Document {
   image: string;
   name: string;
-  desc: string;
   price: string;
   quantity: Number;
   gender: String;
