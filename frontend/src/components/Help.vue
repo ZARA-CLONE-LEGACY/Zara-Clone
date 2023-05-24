@@ -81,7 +81,7 @@ export default defineComponent({
 
     const fetchAnswer = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/help/${typedQuestion.value}`);
+        const response = await axios.get(`http://localhost:3000/help/${typedQuestion.value}`);
         answer.value = response.data.answer;
         console.log(answer)
       } catch (error) {

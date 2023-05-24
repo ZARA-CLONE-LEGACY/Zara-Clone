@@ -122,7 +122,7 @@ export default defineComponent({
 
       try {
         const res = await axios.post(
-          "http://localhost:5000/register",
+          "http://localhost:3000/register",
           newUser,
           {
             headers: {

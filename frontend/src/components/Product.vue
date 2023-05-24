@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <div v-for="(product, index) in products" :key="index">
       <div>
@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ClothesDocument } from '../../../server/models/clothes';
+
 export default defineComponent({
   name: 'Product',
   data() {
@@ -28,5 +28,5 @@ export default defineComponent({
       this.products = product;
     }
   }
-});
+}); -->
 </script>

@@ -49,7 +49,7 @@ export default defineComponent({
           password: this.password,
         };
 
-        const res = await axios.post('http://localhost:5000/login', user, {
+        const res = await axios.post('http://localhost:3000/login', user, {
           headers: {
             'Content-Type': 'application/json',
           },
