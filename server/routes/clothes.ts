@@ -12,10 +12,9 @@ router.get("/", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-router.get("/:id", async (req: Request, res: Response) => {
+router.get("/:&name", async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const clothes = await Clothes.findById(id);
+    const clothes = await Clothes.findOne({ name : req.params.name });
     if (!clothes) {
       return res.status(404).json({ error: "clothes not found" });
     }
