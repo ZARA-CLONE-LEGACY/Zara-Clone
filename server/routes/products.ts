@@ -15,7 +15,7 @@ router.get("/", async (req: Request, res: Response) => {
 //--------------------get product by name--------------------------- 
 router.get("/:name", async (req: Request, res: Response) => {
   try {
-    const clothes = await Products.findOne({name:req.params.name });
+    const clothes = await Products.find({name:req.params.name });
     if (!clothes) {
       return res.status(404).json({error: "product not found" });
     }
@@ -28,7 +28,7 @@ router.get("/:name", async (req: Request, res: Response) => {
 
 router.get("/gender/:gend", async (req: Request, res: Response) => {
   try {
-    const clothes = await Products.findOne({gender:req.params.gend});
+    const clothes = await Products.find({gender:req.params.gend});
     if (!clothes) {
       return res.status(404).json({ error: "product not found"  });
       
@@ -42,11 +42,11 @@ router.get("/gender/:gend", async (req: Request, res: Response) => {
 //--------------------get product by category----------------------------------
 router.get("/category/:cat", async (req: Request, res: Response) => {
   try {
-    const clothes = await Products.findOne({ category:req.params.cat});
+    const clothes = await Products.find({ category:req.params.cat});
     if (!clothes) {
       return res.status(404).json({ error: "product not found" });
     }
-    res.json(clothes);
+    res.send(clothes);
   } catch (error) {
     res.status(500)
   }
@@ -54,7 +54,7 @@ router.get("/category/:cat", async (req: Request, res: Response) => {
 //--------------------get product by color----------------------------------
 router.get("/color/:col", async (req: Request, res: Response) => {
   try {
-    const clothes = await Products.findOne({ color:req.params.col});
+    const clothes = await Products.find({ color:req.params.col});
     if (!clothes) {
       return res.status(404).json({ error: "product not found"  });
     }
@@ -63,11 +63,23 @@ router.get("/color/:col", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+//--------------------get product by id----------------------------------
+router.get("/one/:id", async (req: Request, res: Response) => {
+  try {
+    const clothes = await Products.findOne({ _id:req.params.id});
+    if (!clothes) {
+      return res.status(404).json({ error: "product not found" });
+    }
+    res.json(clothes);
+  } catch (error) {
+    res.status(500)
+  }
+});
 //-------------------post product---------------------------------------------- 
 router.post("/", authenticate, authorizeAdmin, async (req: Request, res: Response) => {
   try {
-    const { image, name, quantity, price, gender, category, color } = req.body;
-    const clothes = await Products.create({ image, name, quantity, price, gender, category, color });
+    const { image, name, quantity, price, gender, category, description } = req.body;
+    const clothes = await Products.create({ image, name, quantity, price, gender, category, description });
     res.status(201).json(clothes);
   } catch (error) {
     res.status(400).json({ error: "Bad request" });
@@ -78,8 +90,8 @@ router.post("/", authenticate, authorizeAdmin, async (req: Request, res: Respons
 router.put("/:id", authenticate, authorizeAdmin, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { image, name, gen, price, desc } = req.body;
-    const clothes = await Products.findByIdAndUpdate(id, { image, name, gen, price, desc }, { new: true });
+    const {image, name, quantity, price, gender, category, description} = req.body;
+    const clothes = await Products.findByIdAndUpdate(id, {image, name, quantity, price, gender, category, description }, { new: true });
     if (!clothes) {
       return res.status(404).json({ error: "product not found" });
     }
