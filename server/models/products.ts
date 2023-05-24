@@ -9,7 +9,6 @@ export interface ProductsDocument extends Document {
   category: String;
   color: String;
   comment: String;
-  cart: CartDocument;
 
 }
 
@@ -23,7 +22,6 @@ const productSchema = new mongoose.Schema<ProductsDocument>(
     category: { type: String, required: true },
     color: { type: String, required: true },
     comment: { type: String, required: true },
-    cart: { type: mongoose.Schema.Types.ObjectId, ref: "Cart" },
   },
   {
     versionKey: false,

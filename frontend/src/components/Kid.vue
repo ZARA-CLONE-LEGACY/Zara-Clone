@@ -5,7 +5,7 @@
       <div v-if="isLoading">Loading...</div>
       <div v-else>
         <div v-for="(product, index) in prod" :key="index">
-          <router-link :to="{ name: 'Product', query: { product:JSON.stringify(product) } }">
+            <router-link :to="{ name: 'Product', props:{ element:product } }">
             <h2>{{ product.name }}</h2>
           </router-link>
         </div>
@@ -36,6 +36,7 @@
           .get('http://localhost:3000/product/gender/Kid')
           .then((response) => {
             this.prod = response.data;
+            console.log(this.prod,'from Kid')
           })
           .catch((error) => {
             console.error(error);
