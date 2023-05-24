@@ -22,6 +22,18 @@ router.get("/", async (req: Request,res: Response)=> {
           res.status(500).json({ error: "Internal server error" });
         }
       });
+      router.post("/",async(req:Request,res:Response)=>{
+        const {question,answer} = req.body;
+
+        const help = new HelpModel({question,answer});
+        try {
+          const newHelp = await help.save();
+          res.json(newHelp);
+          } catch (error) {
+            res.status(500).json({ error: "Internal server error" })
+          }
+          
+      })
 
 
 export default router
