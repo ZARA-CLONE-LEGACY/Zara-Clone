@@ -1,7 +1,7 @@
 <template>
     <div>
       <div v-if="data.length === 0">
-       <p>No products found.</p>
+        <p>Cart is Empty</p>
       </div>
       <div v-else>
         <div v-for="(element, index) in data" :key="index">
@@ -19,45 +19,57 @@
   
   <script lang="ts">
   import { defineComponent } from 'vue';
+  import axios from 'axios';
+  
   interface Product {
-  _id: string;
-  image: string;
-  name: string;
-  price: string;
-  quantity: {
-    toString: (radix?: number | undefined) => string;
-    toFixed: (fractionDigits?: number | undefined) => string;
-    toExponential: (fractionDigits?: number | undefined) => string;
-    toPrecision: (precision?: number | undefined) => string;
-    valueOf: () => number;
-    toLocaleString: () => string;
-  };
-  gender: string;
-  category: string;
-  color: string;
-  comment: string;
-}
+    _id: string;
+    image: string;
+    name: string;
+    price: string;
+    quantity: {
+      toString: (radix?: number | undefined) => string;
+      toFixed: (fractionDigits?: number | undefined) => string;
+      toExponential: (fractionDigits?: number | undefined) => string;
+      toPrecision: (precision?: number | undefined) => string;
+      valueOf: () => number;
+      toLocaleString: () => string;
+    };
+    gender: string;
+    category: string;
+    color: string;
+    comment: string;
+  }
+  
   export default defineComponent({
     name: 'Cart',
     data() {
-    return {
-      data: [] as Product[],
-    };
-  },
-  mounted() {
-    this.fetchProduct();
-  },
-  methods: {
-    fetchProduct(): void {
+      return {
+        data: [] as Product[],
+      };
+    },
+    mounted() {
+      this.fetchProduct();
+      console.log(this.data,'from cart ')
+    },
+    methods: {
+      fetchProduct(): void {
         const storedData = window.localStorage.getItem('User');
         const parsedData = JSON.parse(storedData);
-        console.log(storedData)
-        const cart = parsedData.user?.[0].cart;
-        this.data=cart
-      } 
-    },   
-  })
-
-   
+        const cart = parsedData.user.cart;
+        console.log(cart,'hh')
+        console.log(parsedData.user)
+        cart.forEach((e: string) => {
+          axios
+            .get(`http://localhost:3000/product/one/${e}`)
+            .then((response) => {
+              this.data.push(response.data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        });
+      },
+    },
+  });
   </script>
   

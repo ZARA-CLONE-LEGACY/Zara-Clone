@@ -32,14 +32,13 @@ const getUserById =async (req: Request, res: Response) => {
   }
 };
 
-//------------------------------------------------------------------
+//----------------------------------Add to cart--------------------------------
 const addToCart=(req: Request, res: Response)=>{
   const {userId,productId}=req.body
   console.log(userId, productId);
-  
   User.findByIdAndUpdate(userId,{$push:{cart:productId}}).then(data=>res.send(data))
 }
-
+//-------------------------------------------------------
 const register = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { fname, lname, email, password } = req.body;

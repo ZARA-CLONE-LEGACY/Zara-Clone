@@ -8,28 +8,26 @@
     <ul>
       <li v-for="size in product.sizes" :key="size">{{ size }}</li>
     </ul>
+    <button @click="add">Add to Bag</button>
     <p>Rate the product:</p>
-<form class="star-rating">
-  <input class="radio-input" type="radio" id="star5" name="star-input" value="5" />
-  <label class="radio-label" for="star5" title="5 stars">5 stars</label>
+    <form class="star-rating">
+      <input class="radio-input" type="radio" id="star5" name="star-input" value="5" />
+      <label class="radio-label" for="star5" title="5 stars">5 stars</label>
 
-  <input class="radio-input" type="radio" id="star4" name="star-input" value="4" />
-  <label class="radio-label" for="star4" title="4 stars">4 stars</label>
+      <input class="radio-input" type="radio" id="star4" name="star-input" value="4" />
+      <label class="radio-label" for="star4" title="4 stars">4 stars</label>
 
-  <input class="radio-input" type="radio" id="star3" name="star-input" value="3" />
-  <label class="radio-label" for="star3" title="3 stars">3 stars</label>
+      <input class="radio-input" type="radio" id="star3" name="star-input" value="3" />
+      <label class="radio-label" for="star3" title="3 stars">3 stars</label>
 
-  <input class="radio-input" type="radio" id="star2" name="star-input" value="2" />
-  <label class="radio-label" for="star2" title="2 stars">2 stars</label>
+      <input class="radio-input" type="radio" id="star2" name="star-input" value="2" />
+      <label class="radio-label" for="star2" title="2 stars">2 stars</label>
 
-  <input class="radio-input" type="radio" id="star1" name="star-input" value="1" />
-  <label class="radio-label" for="star1" title="1 star">1 star</label>
-  <p>Product rating: <meter class="average-rating" min="0" max="5" value="4.3" title="4.3 out of 5 stars">4.3 out of 5</meter>
-</p>
-</form>
+      <input class="radio-input" type="radio" id="star1" name="star-input" value="1" />
+      <label class="radio-label" for="star1" title="1 star">1 star</label>
+      <p>Product rating: <meter class="average-rating" min="0" max="5" value="4.3" title="4.3 out of 5 stars">4.3 out of 5</meter></p>
+    </form>
   </div>
-  
-
 </template>
 
 <script lang="ts">
@@ -48,11 +46,6 @@ interface Product {
 
 export default defineComponent({
   name: 'ProductDetails',
-  data() {
-    return {
-      product: {} as Product,
-    };
-  },
   setup() {
     const product = ref<Product>({
       _id: '',
@@ -65,23 +58,39 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      const productId = window.location.href.split("=")[1]
+      const productId = window.location.href.split('=')[1];
       await fetchProduct(productId);
     });
 
     async function fetchProduct(productId: string): Promise<void> {
       try {
-        const response = await axios.get(`http://localhost:3000/product/${productId}`);
+        const response = await axios.get(`http://localhost:3000/product/one/${productId}`);
         product.value = response.data;
       } catch (error) {
         console.error(error);
       }
     }
 
+    async function add(): Promise<void> {
+      const storedData = window.localStorage.getItem('User');
+      const parsedData = JSON.parse(storedData);
+      const userID = parsedData.user._id;
+      const productId = window.location.href.split('=')[1];
+      try {
+        await axios.put('http://localhost:3000/cart/add', { userId: userID, productId: productId });
+        console.log('Product added to cart successfully!');
+      } catch (error) {
+        console.log("this is userid",userID)
+        console.log("this is product id",productId)
+        console.error(error);
+      }
+    }
+
     return {
       product,
+      add
     };
-  },
+  }
 });
 </script>
 

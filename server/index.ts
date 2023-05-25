@@ -19,7 +19,7 @@ app.use("/user",getAll);
 app.use('/one/:id',getUserById);
 app.post("/register", register);
 app.post("/login", login);
-app.post("/add",addToCart);
+app.put("/cart/add",addToCart);
 app.use("/product", products);
 app.use("/help",Help);
 

@@ -4,13 +4,6 @@
     
       <div class="left-form">
         <h2 class="headingform">PERSONAL DETAILS</h2>
-        <div class="selection">
-        <label for="userType">Select User Type:</label>
-        <select id="userType" v-model="userType">
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
         <input
           class="input-text"
           type="text"
@@ -129,20 +122,17 @@ export default defineComponent({
         email: this.email,
         password: this.password,
       };
-
-      try {
-       if (this.userType === "user") {
-          this.$router.push("/");
-        } else if (this.userType === "admin") {
-          this.$router.push("/admin-dashboard");
-        }
-      } catch (err) {
-        console.error(err);
-        this.error = "An error occurred during signup";
-      }
+      const res = await axios.post('http://localhost:3000/register', newUser, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    window.localStorage.setItem('User', JSON.stringify(res.data));
+    window.location.href = '/Login';
+  }
     },
-  },
-});
+  }
+);
 </script>
 
 <style scoped>
