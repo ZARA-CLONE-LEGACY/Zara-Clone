@@ -66,7 +66,7 @@ export default defineComponent({
           .then((response) => {
             this.data = response.data;
           })
-          .catch((error) => {
+          .catch((error) => {0
             console.error(error);
           })
           .finally(() => {

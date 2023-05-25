@@ -1,199 +1,158 @@
 <template>
-    <div>
-      <div class="container">
-        <div class="left">
-          <h2>MATERIALS, CARE AND ORIGIN</h2>
-          <h3>JOIN LIFE</h3>
-          <p>Care for water produced using less water.</p>
-          <br />
-          <p>
-            COMPOSITION & CARE
-            To assess compliance, we have developed a programme of audits and continuous improvement plans.
-          </p>
-          <br />
+  <div class="product-details">
+    <h2>{{ product.name }}</h2>
+    <img :src="product.image" />
+    <p>{{ product.price }} TND</p>
+    <p>{{ product.quantity }}</p>
+    <p>{{ product.description }}</p>
+    <ul>
+      <li v-for="size in product.sizes" :key="size">{{ size }}</li>
+    </ul>
+    <p>Rate the product:</p>
+<form class="star-rating">
+  <input class="radio-input" type="radio" id="star5" name="star-input" value="5" />
+  <label class="radio-label" for="star5" title="5 stars">5 stars</label>
+
+  <input class="radio-input" type="radio" id="star4" name="star-input" value="4" />
+  <label class="radio-label" for="star4" title="4 stars">4 stars</label>
+
+  <input class="radio-input" type="radio" id="star3" name="star-input" value="3" />
+  <label class="radio-label" for="star3" title="3 stars">3 stars</label>
+
+  <input class="radio-input" type="radio" id="star2" name="star-input" value="2" />
+  <label class="radio-label" for="star2" title="2 stars">2 stars</label>
+
+  <input class="radio-input" type="radio" id="star1" name="star-input" value="1" />
+  <label class="radio-label" for="star1" title="1 star">1 star</label>
+  <p>Product rating: <meter class="average-rating" min="0" max="5" value="4.3" title="4.3 out of 5 stars">4.3 out of 5</meter>
+</p>
+</form>
+  </div>
   
-          <h2>MATERIALS</h2>
-          <p>
-            We work with monitoring programmes to ensure compliance with our social, environmental and health and safety standards for our garments.
-          </p>
-          <br />
-          <p>The Green to Wear 2.0 standard aims to minimize the environmental impact.</p>
-          <a href="">
-            <p>View more</p>
-          </a>
-        </div>
-        <div class="containerprod">
-          <div class="img1">
-            <img class="centerimgprod" :src="data[0].productimage" alt="Product Image" />
-          </div>
-        </div>
-        <div>
-          <div class="right" style="marginRight: 40px;">
-            <h2 class="cat">{{ data[0].productname }}</h2>
-            <h3>
-              Lapelless blazer made of a linen blend fabric. Long sleeves. Flap pockets on the front. Tie belt in the same fabric. Matching lining.
-              Double-breasted fastening with hidden button.
-            </h3>
-            <br />
-  
-            <span><p class="pricetag">{{ data[0].productprice }}$</p></span>
-            <p>MRP incl. of all taxes</p>
-            <br />
-            <p>{{ data[0].productcolor }} | 0647/301</p>
-            <br />
-            <select name="" id="prodsize">
-              <option value="null">Select your size</option>
-              <option value="EU 36 (UK 29)">EU 36 (UK 29)</option>
-              <option value="EU 38 (UK 38)">EU 38 (UK 38)</option>
-              <option value="EU 40 (UK 40)">EU 40 (UK 40)</option>
-              <option value="EU 42 (UK 42)">EU 42 (UK 42)</option>
-              <option value="EU 44 (UK 34)">EU 44 (UK 34)</option>
-            </select>
-  
-            <button @click="handleAdd">Add to bag</button>
-  
-            <button>Process order</button>
-  
-            <p>
-              CHECK IN-STORE AVAILABILITY
-              DELIVERY, EXCHANGES AND RETURNS
-            </p>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Comment Section -->
-      <div class="comment-section">
-        <h2>Comments</h2>
-        <div v-for="comment in comments" :key="comment.id">
-          <p>{{ comment.text }}</p>
-          <hr />
-        </div>
-        <div>
-          <input type="text" v-model="newComment" placeholder="Add a comment" />
-          <button @click="addComment">Submit</button>
-        </div>
-      </div>
-  
-      <!-- Review Section -->
-      <div class="review-section">
-        <h2>Reviews</h2>
-        <div class="stars">
-          <span
-            class="star"
-            v-for="star in 5"
-            :key="star"
-            :class="{ 'selected': star <= selectedRating }"
-            @mouseover="hoverRating(star)"
-            @mouseleave="resetRating"
-            @click="selectedRating(star)"
-          >
-            ★
-          </span>
-        </div>
-        <p>Selected Rating: {{ selectedRating }}</p>
-      </div>
-    </div>
-  </template>
-  
+
+</template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import axios from "axios";
-import { addComment } from "@babel/types";
+import { defineComponent, ref, onMounted } from 'vue';
+import axios from 'axios';
 
 interface Product {
-  productname: string;
-  productprice: number;
-  productquantity: number;
-  productcolor: string;
-  productcategory: string;
-  "productsub-category": string;
-  "productsub-sub-category": string;
-  productimage: string;
-  orderid: number;
-}
-
-interface Comment {
-  id: string;
-  text: string;
+  _id: string;
+  image: string;
+  name: string;
+  price: string;
+  quantity: string;
+  description: string;
+  sizes: string[];
 }
 
 export default defineComponent({
+  name: 'ProductDetails',
   data() {
     return {
-      data: [] as Product[],
-      comments: [] as Comment[],
-      newComment: "",
-      selectedRating: 0,
+      product: {} as Product,
     };
   },
-  mounted() {
-    const name = window.location.pathname.split("/")[2];
-    if (name) {
-      axios
-        .get<Product[]>(`http://localhost:5000/api/products/one/${name}`)
-        .then((res) => {
-          this.data = res.data;
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
+  setup() {
+    const product = ref<Product>({
+      _id: '',
+      image: '',
+      name: '',
+      price: '',
+      quantity: '',
+      description: '',
+      sizes: [],
+    });
+
+    onMounted(async () => {
+      const productId = window.location.href.split("=")[1]
+      await fetchProduct(productId);
+    });
+
+    async function fetchProduct(productId: string): Promise<void> {
+      try {
+        const response = await axios.get(`http://localhost:3000/product/${productId}`);
+        product.value = response.data;
+      } catch (error) {
+        console.error(error);
+      }
     }
-  },
-  methods: {
-    handleAdd() {
-      console.log("Add to bag button clicked");
-      const prod: Product = {
-        productname: this.data[0]?.productname || "",
-        productprice: this.data[0]?.productprice || 0,
-        productquantity: this.data[0]?.productquantity || 0,
-        productcolor: this.data[0]?.productcolor || "",
-        productcategory: this.data[0]?.productcategory || "",
-        "productsub-category": this.data[0]?.["productsub-category"] || "",
-        "productsub-sub-category":
-          this.data[0]?.["productsub-sub-category"] || "",
-        productimage: this.data[0]?.productimage || "",
-        orderid: 0, // Set the order ID as per your logic
-      };
-      this.postData(prod);
-    },
-    postData(prod: Product) {
-      axios
-        .post("http://localhost:5000/api/products/", prod)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
-  ddComment() {
-    const comment: Comment = {
-      id: "comment-" + Date.now().toString(), // Generate a unique ID for the comment
-      text: this.newComment,
+
+    return {
+      product,
     };
-    this.comments.push(comment);
-    this.newComment = ""; // Clear the input field after submitting the comment
-  },
-
-  // Method to handle hovering over stars for review
-  hoverRating(star: number) {
-    this.selectedRating = star;
-  },
-
-  // Method to reset the selected rating
-  resetRating() {
-    this.selectedRating = 0;
-  },
-
-  // Method to select the rating
-  selectRating(star: number) {
-    this.selectedRating = star;
   },
 });
 </script>
 
 <style>
-/* Add your CSS styles here */
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.radio-input {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-label {
+  cursor: pointer;
+  font-size: 0;
+  color: rgba(0,0,0,0.2);
+  transition: color 0.1s ease-in-out;
+}
+
+.radio-label:before {
+  content: "★";
+  display: inline-block;
+  font-size: 32px;
+}
+
+.radio-input:checked ~ .radio-label {
+  color: #ffc700;
+  color: gold;
+}
+
+.radio-label:hover,
+.radio-label:hover ~ .radio-label {
+  color: goldenrod;
+}
+
+.radio-input:checked + .radio-label:hover,
+.radio-input:checked + .radio-label:hover ~ .radio-label,
+.radio-input:checked ~ .radio-label:hover,
+.radio-input:checked ~ .radio-label:hover ~ .radio-label,
+.radio-label:hover ~ .radio-input:checked ~ .radio-label {
+  color: darkgoldenrod;
+}
+
+
+.average-rating {
+  position: relative;
+  appearance: none;
+  color: transparent;
+  width: auto;
+  display: inline-block;
+  vertical-align: baseline;
+  font-size: 25px;
+}
+
+.average-rating::before {
+  --percent: calc(4.3/5*100%);
+  content: '★★★★★';
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(0,0,0,0.2);
+  background: linear-gradient(90deg, gold var(--percent), rgba(0,0,0,0.2) var(--percent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+form {
+  margin: 0 0 50px;
+}
 </style>
