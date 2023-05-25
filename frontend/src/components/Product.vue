@@ -9,8 +9,7 @@
     <div v-else>
       <div v-for="(element,index) in data" :key="index">
         <img :src="element.image" />
-        <h2>{{ element.name }}</h2>
-        <h2>{{ element.price }}</h2>
+  /h2>
       </div>
     </div>
   </div>
