@@ -17,7 +17,22 @@ const getAll = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-//------------------------get one user by id----------
+//------------------------get one user by id-------------------------
+const getUserById =async (req: Request, res: Response) => {
+  try {
+    console.log(req.params.id)
+    const user= await User.findOne({ _id:req.params.id});
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(user);
+  }
+   catch (error) {
+    res.status(500)
+  }
+};
+
+//------------------------------------------------------------------
 const addToCart=(req: Request, res: Response)=>{
   const {userId,productId}=req.body
   console.log(userId, productId);
@@ -29,19 +44,15 @@ const register = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { fname, lname, email, password } = req.body;
     console.log(req.body)
-
     let user = await User.findOne({ email });
-
     if (user) {
       return res
         .status(400)
         .send({ message: "Email already exists", status: false });
     }
-
     const is_admin = req.body.is_admin || false; 
     const newUser = new User({ fname, lname, email, password, is_admin });
     await newUser.save()
-
     const token = generateToken(newUser);
     return res.status(200).send({ user, token, status: true });
   } catch (err: any) {
@@ -54,8 +65,8 @@ const login = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { email, password } = req.body;
 
+    console.log(email)
     const user = await User.findOne({ email });
-
     if (!user) {
       return res
         .status(400)
@@ -82,4 +93,4 @@ const isAdmin = (user: UserDocument): boolean => {
   return user.is_admin;
 };
 
-export { register, login, isAdmin, getAll,addToCart };
+export { register, login, isAdmin, getAll,addToCart,getUserById };
