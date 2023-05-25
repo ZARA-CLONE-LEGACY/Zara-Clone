@@ -93,8 +93,6 @@ router.put("/:id", authenticate, authorizeAdmin, async (req: Request, res: Respo
     const { id } = req.params;
     const {image, name, quantity, price, gender, category, description} = req.body;
     const clothes = await Products.findByIdAndUpdate(id, {image, name, quantity, price, gender, category, description }, { new: true });
-    const { image, name, quantity, price, gender, category, description } = req.body;
-    const clothes = await Products.findByIdAndUpdate(id, { image, name, quantity, price, gender, category, description }, { new: true });
     if (!clothes) {
       return res.status(404).json({ error: "product not found" });
     }

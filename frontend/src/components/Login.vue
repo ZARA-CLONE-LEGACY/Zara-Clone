@@ -56,6 +56,9 @@ export default defineComponent({
         });
 
         window.localStorage.setItem('User', JSON.stringify(res.data));
+        localStorage.setItem('userName', res.data.user.fname);
+        localStorage.setItem( 'isAdmin' ,res.data.user.is_admin);
+        localStorage.setItem( 'token' ,res.data.token);
         this.Error = 'Authentication successful';
         window.location.href = '/';
       } catch (err) {

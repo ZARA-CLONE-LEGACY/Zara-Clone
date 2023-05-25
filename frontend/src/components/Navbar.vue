@@ -39,13 +39,26 @@
           </router-link>
         </div>
         <div id="headerRightRight">
-        
           <router-link
-             to="/Login"
+            to="/Login"
             style="text-decoration: none; padding: 0px 10px 0px 10px; font-size: 13px; color: rgb(41, 41, 41); font-weight: 100; font-family: Neue-Helvetica, Helvetica, Arial, Sans-Serif; font-stretch: ultra-condensed;"
           >
             <span class="menuLink">LOG IN</span>
           </router-link>
+          <router-link to="./Dashboard">
+            <button class="button" v-if="isAdmin" id="dash">DASHBOARD</button>
+          </router-link>
+          <template v-if="userName">
+            <div class="dropdown">
+              <button class="button" id="un" @click="toggleDropdown">
+                {{ isDropdownOpen ? '.' : '.' }} {{ userName }}
+              </button>
+              <a class="dropdown-menu" v-if="isDropdownOpen">
+                <a id="out" @click="handleLogout">Logout</a>
+              </a>
+            </div>
+          </template>
+          <button class="button" v-if="isLogged" @click="handleLoginClick"> LOG IN </button>
           <router-link
             to="/help"
             style="text-decoration: none; padding: 0px 10px 0px 10px; font-size: 13px; color: rgb(41, 41, 41); font-weight: 100; font-family: Neue-Helvetica, Helvetica, Arial, Sans-Serif; font-stretch: ultra-condensed;"
@@ -125,64 +138,110 @@
 
 <script>
 import axios from 'axios';
+import { ref, onMounted } from 'vue';
 import Men from './Men.vue';
 import Woman from './Woman.vue';
-import Kid from './Kid.vue'
+import Kid from './Kid.vue';
+import { useRouter } from 'vue-router';
+
 export default {
-  data() {
+  setup() {
+    const userName = ref('');
+    const isDropdownOpen = ref(false);
+    const isAdmin = ref(false);
+    const isLogged = ref(false);
+    const router = useRouter();
+
+    const toggleDropdown = () => {
+      isDropdownOpen.value = !isDropdownOpen.value;
+    };
+
+    const handleLoginClick = () => {
+      router.push('/Login');
+    };
+
+    const handleLogout = () => {
+      window.localStorage.removeItem('token');
+      window.localStorage.clear();
+      isDropdownOpen.value = false;
+      window.location.href = '/';
+    };
+
+    onMounted(() => {
+      const storedUserName = localStorage.getItem('userName');
+      if (storedUserName) {
+        userName.value = storedUserName;
+      }
+
+      const checkAdmin = localStorage.getItem('isAdmin');
+      if (checkAdmin) {
+        isAdmin.value = checkAdmin === 'true';
+      }
+
+      const checkLogged = localStorage.getItem('token');
+      if (checkLogged) {
+        isLogged.value = false;
+      }
+    });
+
     return {
+      userName,
+      isDropdownOpen,
+      isAdmin,
+      isLogged,
+      toggleDropdown,
+      handleLoginClick,
+      handleLogout,
       isMenuOpen: false,
       data: [],
       display: false,
       show: false,
       showKid: false,
-      showBeauty: false
+      showBeauty: false,
+      fetchData() {
+        axios
+          .get('http://localhost:3000/product/')
+          .then(response => {
+            this.data = response.data;
+            console.log(this.data);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
+      toggleMenu() {
+        this.isMenuOpen = !this.isMenuOpen;
+      },
+      toggleDisplay() {
+        this.display = !this.display;
+        this.show = false;
+        this.showKid = false;
+        this.showBeauty = false;
+      },
+      toggleShow() {
+        this.show = !this.show;
+        this.display = false;
+        this.showKid = false;
+        this.showBeauty = false;
+      },
+      toggleShowKid() {
+        this.showKid = !this.showKid;
+        this.display = false;
+        this.show = false;
+        this.showBeauty = false;
+      },
+      toggleShowBeauty() {
+        this.showBeauty = !this.showBeauty;
+        this.showKid = false;
+        this.display = false;
+        this.show = false;
+      },
     };
   },
-  components:{
+  components: {
     Men,
     Woman,
-    Kid
-  },
-  methods: {
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-    },
-    toggleDisplay() {
-      this.display = !this.display;
-      this.show = false;
-      this.showKid = false;
-      this.showBeauty = false;
-    },
-    toggleShow() {
-      this.show = !this.show;
-      this.display = false;
-      this.showKid = false;
-      this.showBeauty = false;
-    },
-    toggleShowKid() {
-      this.showKid = !this.showKid;
-      this.display = false;
-      this.show = false;
-      this.showBeauty = false;
-    },
-    toggleShowBeauty() {
-      this.showBeauty = !this.showBeauty;
-      this.showKid = false;
-      this.display = false;
-      this.show = false;
-    },
-    fetchData() {
-      axios
-        .get('http://localhost:3000/product/')
-        .then(response => {
-          this.data = response.data;
-          console.log(this.data)
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
+    Kid,
   },
   mounted() {
     this.fetchData();
