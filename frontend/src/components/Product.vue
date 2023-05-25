@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div>
     <div>
       <h2>{{ element.name }}</h2>
@@ -8,9 +8,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { ProductsDocument } from '../../../server/models/products';
-import { PropType } from 'vue';
 
 export default defineComponent({
   name: 'Product',
@@ -22,4 +21,3 @@ export default defineComponent({
   },
 });
 </script>
-

@@ -28,7 +28,7 @@ router.get("/:name", async (req: Request, res: Response) => {
 
 router.get("/gender/:gend", async (req: Request, res: Response) => {
   try {
-    const clothes = await Products.findOne({gender:req.params.gend});
+    const clothes = await Products.find({gender:req.params.gend});
     if (!clothes) {
       return res.status(404).json({ error: "product not found"  });
       
@@ -66,10 +66,11 @@ router.get("/color/:col", async (req: Request, res: Response) => {
 //-------------------post product---------------------------------------------- 
 router.post("/", authenticate, authorizeAdmin, async (req: Request, res: Response) => {
   try {
-    const { image, name, quantity, price, gender, category, color } = req.body;
-    const clothes = await Products.create({ image, name, quantity, price, gender, category, color });
+    const { image, name, quantity, price, gender, category, description } = req.body;
+    const clothes = await Products.create({ image, name, quantity, price, gender, category, description });
     res.status(201).json(clothes);
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: "Bad request" });
   }
 });
@@ -78,8 +79,8 @@ router.post("/", authenticate, authorizeAdmin, async (req: Request, res: Respons
 router.put("/:id", authenticate, authorizeAdmin, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { image, name, gen, price, desc } = req.body;
-    const clothes = await Products.findByIdAndUpdate(id, { image, name, gen, price, desc }, { new: true });
+    const { image, name, quantity, price, gender, category, description } = req.body;
+    const clothes = await Products.findByIdAndUpdate(id, { image, name, quantity, price, gender, category, description }, { new: true });
     if (!clothes) {
       return res.status(404).json({ error: "product not found" });
     }
