@@ -8,7 +8,9 @@
     </div>
     <div v-else>
       <div v-for="(element,index) in data" :key="index">
-        <img :src="element.image" />
+        <router-link :to="{ path: '/details', query: { element:element._id} }">
+          <img :src="element.image" />
+          </router-link>
         <h2>{{ element.name }}</h2>
         <h2>{{ element.price }}</h2>
       </div>
