@@ -51,7 +51,7 @@
           <template v-if="userName">
             <div class="dropdown">
               <button class="button" id="un" @click="toggleDropdown">
-                {{ isDropdownOpen ? '.' : '.' }} {{ userName }}
+                 {{ userName }}
               </button>
               <a class="dropdown-menu" v-if="isDropdownOpen">
                 <a id="out" @click="handleLogout">Logout</a>
@@ -150,11 +150,14 @@ export default {
     const isDropdownOpen = ref(false);
     const isAdmin = ref(false);
     const isLogged = ref(false);
-    const router = useRouter();
+    const isMenuOpen = ref(false)
 
     const toggleDropdown = () => {
       isDropdownOpen.value = !isDropdownOpen.value;
     };
+    const toggleMenu = () => {
+    isMenuOpen.value = true;
+  };
 
     const handleLoginClick = () => {
       router.push('/Login');
@@ -192,7 +195,8 @@ export default {
       toggleDropdown,
       handleLoginClick,
       handleLogout,
-      isMenuOpen: false,
+      toggleMenu,
+      isMenuOpen,
       data: [],
       display: false,
       show: false,
