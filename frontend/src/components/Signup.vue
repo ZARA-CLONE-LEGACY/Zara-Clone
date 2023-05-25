@@ -1,8 +1,16 @@
 <template>
   <div>
     <form class="container" @submit="handleSubmit">
+    
       <div class="left-form">
         <h2 class="headingform">PERSONAL DETAILS</h2>
+        <div class="selection">
+        <label for="userType">Select User Type:</label>
+        <select id="userType" v-model="userType">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
         <input
           class="input-text"
           type="text"
@@ -25,6 +33,7 @@
             placeholder="NAME"
             v-model="fname" />
         </div>
+      
         <div class="checkbox">
           <div>
             <input
@@ -106,6 +115,7 @@ export default defineComponent({
       confirmpassword: "",
       fname: "",
       lname: "",
+      userType: "user",
       error: "",
     };
   },
@@ -121,6 +131,7 @@ export default defineComponent({
       };
 
       try {
+<<<<<<< HEAD
         const res = await axios.post(
           "http://localhost:3000/register",
           newUser,
@@ -133,6 +144,13 @@ export default defineComponent({
         window.localStorage.setItem("User", JSON.stringify(res.data));
 
        window.location.href = '/login'
+=======
+       if (this.userType === "user") {
+          this.$router.push("/");
+        } else if (this.userType === "admin") {
+          this.$router.push("/admin-dashboard");
+        }
+>>>>>>> 9290e82a246ce9687f08ace3c1af4534fb91cd3f
       } catch (err) {
         console.error(err);
         this.error = "An error occurred during signup";
