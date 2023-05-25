@@ -48,7 +48,7 @@
           <router-link to="./Dashboard">
             <button class="button" v-if="isAdmin" id="dash">DASHBOARD</button>
           </router-link>
-          <template v-if="userName">
+          <div v-if="userName">
             <div class="dropdown">
               <button class="button" id="un" @click="toggleDropdown">
                  {{ userName }}
@@ -57,7 +57,7 @@
                 <a id="out" @click="handleLogout">Logout</a>
               </a>
             </div>
-          </template>
+          </div>
           <button class="button" v-if="isLogged" @click="handleLoginClick"> LOG IN </button>
           <router-link
             to="/help"
@@ -145,7 +145,7 @@ import Kid from './Kid.vue';
 import { useRouter } from 'vue-router';
 
 export default {
-  setup() {
+  data() {
     const userName = ref('');
     const isDropdownOpen = ref(false);
     const isAdmin = ref(false);
@@ -155,9 +155,6 @@ export default {
     const toggleDropdown = () => {
       isDropdownOpen.value = !isDropdownOpen.value;
     };
-    const toggleMenu = () => {
-    isMenuOpen.value = true;
-  };
 
     const handleLoginClick = () => {
       router.push('/Login');
@@ -195,52 +192,52 @@ export default {
       toggleDropdown,
       handleLoginClick,
       handleLogout,
-      toggleMenu,
-      isMenuOpen,
       data: [],
+      isMenuOpen: false,
       display: false,
       show: false,
       showKid: false,
       showBeauty: false,
-      fetchData() {
-        axios
-          .get('http://localhost:3000/product/')
-          .then(response => {
-            this.data = response.data;
-            console.log(this.data);
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      },
-      toggleMenu() {
-        this.isMenuOpen = !this.isMenuOpen;
-      },
-      toggleDisplay() {
-        this.display = !this.display;
-        this.show = false;
-        this.showKid = false;
-        this.showBeauty = false;
-      },
-      toggleShow() {
-        this.show = !this.show;
-        this.display = false;
-        this.showKid = false;
-        this.showBeauty = false;
-      },
-      toggleShowKid() {
-        this.showKid = !this.showKid;
-        this.display = false;
-        this.show = false;
-        this.showBeauty = false;
-      },
-      toggleShowBeauty() {
-        this.showBeauty = !this.showBeauty;
-        this.showKid = false;
-        this.display = false;
-        this.show = false;
-      },
     };
+  },
+  methods: {
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    },
+    toggleDisplay() {
+      this.display = !this.display;
+      this.show = false;
+      this.showKid = false;
+      this.showBeauty = false;
+    },
+    toggleShow() {
+      this.show = !this.show;
+      this.display = false;
+      this.showKid = false;
+      this.showBeauty = false;
+    },
+    toggleShowKid() {
+      this.showKid = !this.showKid;
+      this.display = false;
+      this.show = false;
+      this.showBeauty = false;
+    },
+    toggleShowBeauty() {
+      this.showBeauty = !this.showBeauty;
+      this.showKid = false;
+      this.display = false;
+      this.show = false;
+    },
+    fetchData() {
+      axios
+        .get('http://localhost:5000/api/products/')
+        .then(response => {
+          this.data = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   },
   components: {
     Men,
@@ -252,6 +249,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 
