@@ -1,66 +1,77 @@
 <template>
   <div>
     <input
-      classname="searchbar"
+      class="searchbar"
       type="text"
       placeholder="Search for an item"
       v-model="search"
       @input="handleSearch"
     />
 
-    <div v-for="result in filteredItems" :key="result.productId">
+    <div v-if="filteredItems !== null" v-for="result in filteredItems" :key="result.productId">
       <img
-        :src="result.productimage"
+        :src="result.image"
         alt="image"
         style="width: 230px; height: 350px"
       />
-      <div>Product Name: {{ result.productname }}</div>
-      <div>Product Price: {{ result.productprice }}</div>
+      <div>Product Name: {{ result.name }}</div>
+      <div>Product Price: {{ result.price }}</div>
     </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 
 export default {
   data() {
-    return {
-      search: "",
-      results: [],
-      filteredItems: [],
-    };
-  },
+  return {
+    search: "",
+    results: [],
+    filteredItems: null, 
+  };
+},
+
   methods: {
-    fetchData(searchTerm) {
-      axios
-        .get(`http://localhost:5000/clothes/${name}`)
-        .then((response) => {
-          this.results = response.data;
-          console.log(response.data);
-          console.log("hi");
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-  },
-  mounted() {
-    let searchTimer = null;
+    handleSearch() {
+  if (this.search === "") {
+    this.filteredItems = [];
+  } else {
+    const filtered = this.results.filter(
+      (item) =>
+        item.name.toLowerCase().includes(this.search.toLowerCase()) ||
+        item.description.toLowerCase().includes(this.search.toLowerCase())
+    );
 
-    if (typeof window !== "undefined") {
-      this.fetchData(this.search);
-    }
+    this.filteredItems = filtered;
+  }
+},
 
-    this.$watch("search", () => {
-      clearTimeout(searchTimer);
-      searchTimer = setTimeout(() => {
-        this.fetchData(this.search);
-      }, 300);
+
+fetchData() {
+  axios
+    .get(`http://localhost:3000/product/${name}`)
+    .then((response) => {
+      this.results = response.data;
+      console.log(response.data);
+      console.log('hi');
+      this.handleSearch();
+    })
+    .catch((error) => {
+      console.error(error);
     });
-  },
+},
+
+},
+created() {
+  this.fetchData();
+},
+
+
 };
 </script>
+
+
+
 
 <style scoped>
 .searchbar {

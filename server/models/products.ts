@@ -1,12 +1,16 @@
 import mongoose, { Document } from "mongoose";
 
 export interface ProductsDocument extends Document {
+[x: string]: any;
   image: string;
   name: string;
   price: string;
   quantity: Number;
   gender: String;
   category: String;
+  description: String;
+  
+
 }
 
 const productSchema = new mongoose.Schema<ProductsDocument>(
@@ -17,6 +21,8 @@ const productSchema = new mongoose.Schema<ProductsDocument>(
     quantity: { type: Number, required: true },
     gender: { type: String, required: true },
     category: { type: String, required: true },
+    description: { type: String, required: true },
+
   },
   {
     versionKey: false,
