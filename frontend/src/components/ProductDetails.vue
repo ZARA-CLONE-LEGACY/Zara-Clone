@@ -11,7 +11,7 @@
     <p>Rate the product:</p>
 <form class="star-rating">
   <input class="radio-input" type="radio" id="star5" name="star-input" value="5" />
-  <label class="radio-label" class for="star5" title="5 stars">5 stars</label>
+  <label class="radio-label" for="star5" title="5 stars">5 stars</label>
 
   <input class="radio-input" type="radio" id="star4" name="star-input" value="4" />
   <label class="radio-label" for="star4" title="4 stars">4 stars</label>
@@ -61,15 +61,15 @@ export default defineComponent({
       price: '',
       quantity: '',
       description: '',
-      sizes: []
-    }); // Change the variable name to 'product'
+      sizes: [],
+    });
 
     onMounted(async () => {
-      const productId = this.$route.query.element as string; // Access the product ID from the route query
+      const productId = window.location.href.split("=")[1]
       await fetchProduct(productId);
     });
 
-    async function fetchProduct(productId: string): Promise<void> { // Accept productId as a parameter
+    async function fetchProduct(productId: string): Promise<void> {
       try {
         const response = await axios.get(`http://localhost:3000/product/${productId}`);
         product.value = response.data;
@@ -84,3 +84,75 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.radio-input {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-label {
+  cursor: pointer;
+  font-size: 0;
+  color: rgba(0,0,0,0.2);
+  transition: color 0.1s ease-in-out;
+}
+
+.radio-label:before {
+  content: "★";
+  display: inline-block;
+  font-size: 32px;
+}
+
+.radio-input:checked ~ .radio-label {
+  color: #ffc700;
+  color: gold;
+}
+
+.radio-label:hover,
+.radio-label:hover ~ .radio-label {
+  color: goldenrod;
+}
+
+.radio-input:checked + .radio-label:hover,
+.radio-input:checked + .radio-label:hover ~ .radio-label,
+.radio-input:checked ~ .radio-label:hover,
+.radio-input:checked ~ .radio-label:hover ~ .radio-label,
+.radio-label:hover ~ .radio-input:checked ~ .radio-label {
+  color: darkgoldenrod;
+}
+
+
+.average-rating {
+  position: relative;
+  appearance: none;
+  color: transparent;
+  width: auto;
+  display: inline-block;
+  vertical-align: baseline;
+  font-size: 25px;
+}
+
+.average-rating::before {
+  --percent: calc(4.3/5*100%);
+  content: '★★★★★';
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(0,0,0,0.2);
+  background: linear-gradient(90deg, gold var(--percent), rgba(0,0,0,0.2) var(--percent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+form {
+  margin: 0 0 50px;
+}
+</style>
