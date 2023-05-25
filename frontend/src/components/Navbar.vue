@@ -98,13 +98,13 @@
             </div>
             <li class="menuOption" style="margin-top: -20px; fontsize: 20px;">NEW</li>
             <div class="menuOption" v-if="display">
-              <Men />
+              <Men/>
             </div>
             <div class="menuOption" v-if="show">
               <Woman />
             </div>
             <div class="menuOption" v-if="showKid">
-              <Kid />
+              <Kid/>
             </div>
             <div class="menuOption" v-if="showBeauty" style="text-decoration: none; cursor: default;">
               <Beauty />
@@ -173,9 +173,10 @@ export default {
     },
     fetchData() {
       axios
-        .get('http://localhost:5000/api/products/')
+        .get('http://localhost:3000/product/')
         .then(response => {
           this.data = response.data;
+          console.log(this.data)
         })
         .catch(error => {
           console.error(error);
@@ -185,9 +186,6 @@ export default {
   mounted() {
     this.fetchData();
   },
-
-
-  
 };
 </script>
 
