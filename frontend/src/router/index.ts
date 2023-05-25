@@ -7,7 +7,9 @@ import ProductDetailsVue from '@/components/ProductDetails.vue';
 import ProductVue from '@/components/Product.vue';
 import Search from '../components/Search.vue';
 import Dashboard from '../components/Dashboard.vue'
-import Menforadmin from '../components/Menforadmin.vue'
+import MenAdmin from '../components/Menforadmin.vue';
+import WomanAdmin from '../components/WomanAdmin.vue';
+
 const routes = [
   { path: '/', component: HomeView },
   { path: '/login', component: Login },
@@ -17,7 +19,8 @@ const routes = [
   { path: '/product', component: ProductVue },
   { path: '/search', component: Search },
   { path: '/dashboard', component: Dashboard },
-  { path: '/menforadmin', component:Menforadmin },
+  { path: '/menAdmin', component:MenAdmin },
+  { path: '/womanAdmin', component:WomanAdmin },
 
 ];
 
