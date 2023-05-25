@@ -33,16 +33,24 @@ export default defineComponent({
     };
   },
   setup() {
-    const productId = ref('');
+    const product = ref<Product>({
+      _id: '',
+      image: '',
+      name: '',
+      price: '',
+      quantity: '',
+      description: '',
+      sizes: []
+    }); // Change the variable name to 'product'
 
     onMounted(async () => {
-      productId.value = $route.params.id;
-      await fetchProduct();
+      const productId = this.$route.query.element as string; // Access the product ID from the route query
+      await fetchProduct(productId);
     });
 
-    async function fetchProduct(): Promise<void> {
+    async function fetchProduct(productId: string): Promise<void> { // Accept productId as a parameter
       try {
-        const response = await axios.get(`http://localhost:3000/product/${productId.value}`);
+        const response = await axios.get(`http://localhost:3000/product/${productId}`);
         product.value = response.data;
       } catch (error) {
         console.error(error);
