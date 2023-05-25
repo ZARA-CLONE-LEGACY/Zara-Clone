@@ -57,14 +57,14 @@ export default defineComponent({
     fetchProduct(): void {
       const category = window.location.href.split("=")[1]
       console.log(this.$route.query.element as string,'rout')
-      console.log(category,'cat')
+      console.log(category,'cat')  
       if(category){     
         axios
           .get(`http://localhost:3000/product/category/${category}`)
           .then((response) => {
             this.data = response.data;
           })
-          .catch((error) => {
+          .catch((error) => {0
             console.error(error);
           })
           .finally(() => {
