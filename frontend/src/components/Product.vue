@@ -53,16 +53,13 @@ export default defineComponent({
   },
   mounted() {
     this.fetchProduct();
-    console.log(this.data, 'ff');
   },
   methods: {
     fetchProduct(): void {
-      const category = window.location.href.split("=")[1];
-      console.log(this.$route.query.element as string, 'rout');
-      console.log(category, 'cat');
-      if (category) {
+      const detail = window.location.href.split("=")[1];
+      if (detail) {
         axios
-          .get(`http://localhost:3000/product/category/${category}`)
+          .get(`http://localhost:3000/product/category/${detail}`)
           .then((response) => {
             this.data = response.data;
           })
@@ -76,7 +73,9 @@ export default defineComponent({
         this.isLoading = true;
       }
     },
+    
   },
+
 });
 </script>
 

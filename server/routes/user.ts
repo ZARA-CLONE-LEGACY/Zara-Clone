@@ -17,6 +17,7 @@ const getAll = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+//------------------------get one user by id----------
 const addToCart=(req: Request, res: Response)=>{
   const {userId,productId}=req.body
   console.log(userId, productId);
