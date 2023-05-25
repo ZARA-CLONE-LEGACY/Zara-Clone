@@ -99,13 +99,13 @@
             </div>
             <li class="menuOption" style="margin-top: -20px; fontsize: 20px;">NEW</li>
             <div class="menuOption" v-if="display">
-              <Men />
+              <Men/>
             </div>
             <div class="menuOption" v-if="show">
               <Woman />
             </div>
             <div class="menuOption" v-if="showKid">
-              <Kid />
+              <Kid/>
             </div>
             <div class="menuOption" v-if="showBeauty" style="text-decoration: none; cursor: default;">
               <Beauty />

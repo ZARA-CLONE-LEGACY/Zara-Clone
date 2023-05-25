@@ -1,6 +1,7 @@
 import mongoose, { Document } from "mongoose";
 
 export interface ProductsDocument extends Document {
+[x: string]: any;
   image: string;
   name: string;
   price: string;
