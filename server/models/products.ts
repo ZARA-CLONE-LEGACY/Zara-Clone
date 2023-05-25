@@ -8,8 +8,7 @@ export interface ProductsDocument extends Document {
   quantity: Number;
   gender: String;
   category: String;
-  description: String;
-  
+  description:String;
 
 }
 
@@ -22,7 +21,6 @@ const productSchema = new mongoose.Schema<ProductsDocument>(
     gender: { type: String, required: true },
     category: { type: String, required: true },
     description: { type: String, required: true },
-
   },
   {
     versionKey: false,

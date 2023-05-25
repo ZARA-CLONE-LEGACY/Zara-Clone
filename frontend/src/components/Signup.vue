@@ -131,11 +131,26 @@ export default defineComponent({
       };
 
       try {
+<<<<<<< HEAD
+        const res = await axios.post(
+          "http://localhost:3000/register",
+          newUser,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        );
+        window.localStorage.setItem("User", JSON.stringify(res.data));
+
+       window.location.href = '/login'
+=======
        if (this.userType === "user") {
           this.$router.push("/");
         } else if (this.userType === "admin") {
           this.$router.push("/admin-dashboard");
         }
+>>>>>>> 9290e82a246ce9687f08ace3c1af4534fb91cd3f
       } catch (err) {
         console.error(err);
         this.error = "An error occurred during signup";

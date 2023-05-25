@@ -82,6 +82,7 @@ router.post("/", authenticate, authorizeAdmin, async (req: Request, res: Respons
     const clothes = await Products.create({ image, name, quantity, price, gender, category, description });
     res.status(201).json(clothes);
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: "Bad request" });
   }
 });
