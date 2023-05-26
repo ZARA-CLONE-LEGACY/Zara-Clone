@@ -44,7 +44,7 @@ interface Product {
 }
 
 export default defineComponent({
-  name: 'Product',
+  name: 'Product', 
   data() {
     return {
       data: [] as Product[],

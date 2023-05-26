@@ -56,7 +56,7 @@ export default defineComponent({
       description: '',
       sizes: [],
     });
-
+    const newUser = ref<any>({});
     onMounted(async () => {
       const productId = window.location.href.split('=')[1];
       await fetchProduct(productId);
@@ -70,21 +70,34 @@ export default defineComponent({
         console.error(error);
       }
     }
+    async function getUser(id: number): Promise<void> {
+  try {
+    const response = await axios.get(`http://localhost:3000/one/${id}`);
+    newUser.value = response.data;
+    console.log( response.data,'this is response');
+  } catch (error) {
+    console.error(error);
+  }
+}
+async function add(): Promise<void> {
+  const storedData = window.localStorage.getItem('User');
+  const parsedData = JSON.parse(storedData);
+  const userID = parsedData.user._id;
+  const productId = window.location.href.split('=')[1];
+  console.log(parsedData.user,'bf')
+  try {
+    await axios.put('http://localhost:3000/cart/add', { userId: userID, productId: productId })
+      await  getUser(userID)//get the new object with the updated cart ;
+      console.log(newUser.value,'new')
+      window.localStorage.setItem('User',JSON.stringify(newUser.value));
 
-    async function add(): Promise<void> {
-      const storedData = window.localStorage.getItem('User');
-      const parsedData = JSON.parse(storedData);
-      const userID = parsedData.user._id;
-      const productId = window.location.href.split('=')[1];
-      try {
-        await axios.put('http://localhost:3000/cart/add', { userId: userID, productId: productId });
-        console.log('Product added to cart successfully!');
-      } catch (error) {
-        console.log("this is userid",userID)
-        console.log("this is product id",productId)
-        console.error(error);
+
       }
-    }
+   catch (error) {
+    console.error(error);
+  }
+}
+
 
     return {
       product,

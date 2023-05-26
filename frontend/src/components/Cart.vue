@@ -14,6 +14,7 @@
           </div>
         </div>
       </div>
+     
     </div>
   </template>
   
@@ -49,15 +50,15 @@
     },
     mounted() {
       this.fetchProduct();
-      console.log(this.data,'from cart ')
+      console.log(this.data,'this is data from cart ')
     },
     methods: {
       fetchProduct(): void {
-        const storedData = window.localStorage.getItem('User');
-        const parsedData = JSON.parse(storedData);
-        const cart = parsedData.user.cart;
-        console.log(cart,'hh')
-        console.log(parsedData.user)
+        const storedData = JSON.parse(window.localStorage.getItem('User'));
+        console.log(storedData,'stored data')
+        const cart = storedData.cart;
+        console.log(cart,'this is the cart')
+        // console.log(parsedData.user,"from cart")
         cart.forEach((e: string) => {
           axios
             .get(`http://localhost:3000/product/one/${e}`)
