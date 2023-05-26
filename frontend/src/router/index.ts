@@ -7,7 +7,12 @@ import ProductDetailsVue from '@/components/ProductDetails.vue';
 import ProductVue from '@/components/Product.vue';
 import Search from '../components/Search.vue';
 import Dashboard from '../components/Dashboard.vue'
-import Menforadmin from '../components/Menforadmin.vue'
+import MenAdmin from '../components/Menforadmin.vue';
+import WomanAdmin from '../components/WomanAdmin.vue';
+import KidAdmin from '../components/KidAdmin.vue';
+import ProductAdmin from '../components/DetailsPage.vue';
+import AddItem from '../components/AddItem.vue'
+import UpdateProduct from '../components/UpdateProduct.vue'
 const routes = [
   { path: '/', component: HomeView },
   { path: '/login', component: Login },
@@ -17,7 +22,14 @@ const routes = [
   { path: '/product', component: ProductVue },
   { path: '/search', component: Search },
   { path: '/dashboard', component: Dashboard },
-  { path: '/menforadmin', component:Menforadmin },
+  { path: '/menAdmin', component:MenAdmin },
+  { path: '/womanAdmin', component:WomanAdmin },
+  { path: '/kidAdmin', component:KidAdmin },
+  { path: '/DetailsPage', component:ProductAdmin },
+  { path: '/UpdateProduct', component:UpdateProduct },
+  { path: '/Add', component:AddItem },
+
+
 
 ];
 
