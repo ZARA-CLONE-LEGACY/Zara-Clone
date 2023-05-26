@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container1">
     <h1>Add Product</h1>
-    <form @submit="handleFormSubmit">
+    <form @submit="handleFormSubmit" class="form" >
       <label>
         Name:
         <input type="text" v-model="name" />
@@ -105,7 +105,7 @@ export default defineComponent({
 });
 </script>
 <style>
-.container {
+.container1 {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
@@ -116,7 +116,7 @@ export default defineComponent({
     margin-bottom: 20px;
   }
   
-  form {
+  .form {
     display: flex;
     flex-direction: column;
   }
@@ -125,7 +125,7 @@ export default defineComponent({
     margin-bottom: 10px;
   }
   
-  input[type="text"],
+  .container1  input[type="text"],
   textarea {
     padding: 8px;
     border: 1px solid #ccc;
