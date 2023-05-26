@@ -5,7 +5,7 @@
       <div v-else>
         <div v-for="(el,i) in prod" :key="i">
             <router-link :to="{ path: '/product', query: { element:el.category} }">
-                <h2 >{{ el.category }}</h2>
+                <h2 >{{el.category}}</h2>
           </router-link>
       </div>    
         </div>
@@ -42,7 +42,6 @@ export default {
     };
 
     onMounted(fetchData);
-
     return state;
   },
 };

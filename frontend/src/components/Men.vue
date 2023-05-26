@@ -18,7 +18,7 @@ import { reactive, onMounted } from 'vue';
 import axios from 'axios';
 
 export default {
-  name: 'Men',
+  name: 'hhhhh',
   setup() {
     const state = reactive({
       prod: [],
