@@ -10,7 +10,7 @@
           <router-link to="/womanAdmin">
             <button class="z" id="w">Woman</button>
           </router-link>
-          <router-link to="/Kid">
+          <router-link to="/kidAdmin">
             <button class="z" id="k">KIDS</button>
           </router-link>
       
