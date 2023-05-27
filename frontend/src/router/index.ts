@@ -7,6 +7,7 @@ import ProductDetailsVue from '@/components/ProductDetails.vue';
 import ProductVue from '@/components/Product.vue';
 import Search from '../components/Search.vue';
 import Dashboard from '../components/Dashboard.vue'
+import Cart from '../components/Cart.vue'
 import MenAdmin from '../components/Menforadmin.vue';
 import WomanAdmin from '../components/WomanAdmin.vue';
 import KidAdmin from '../components/KidAdmin.vue';
@@ -22,6 +23,7 @@ const routes = [
   { path: '/product', component: ProductVue },
   { path: '/search', component: Search },
   { path: '/dashboard', component: Dashboard },
+  { path: '/Cart', component:Cart },
   { path: '/menAdmin', component:MenAdmin },
   { path: '/womanAdmin', component:WomanAdmin },
   { path: '/kidAdmin', component:KidAdmin },

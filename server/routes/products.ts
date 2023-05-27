@@ -2,8 +2,7 @@ import express, { Request, Response } from "express";
 import Products from "../models/products";
 import { authenticate ,authorizeAdmin } from "../auth";
 const router = express.Router();
-
-//-----------------------------get all product---------------------------------
+//-----------------------------------------------get all product---------------------------------------
 router.get("/", async (req: Request, res: Response) => {
   try {
     const clothes = await Products.find();
@@ -12,7 +11,7 @@ router.get("/", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-//--------------------get product by name--------------------------- 
+//-------------------------------------------get product by name------------------------------------------ 
 router.get("/:name", async (req: Request, res: Response) => {
   try {
     const clothes = await Products.find({name:req.params.name });
@@ -24,7 +23,7 @@ router.get("/:name", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-//--------------------get product by gender------------------------------------
+//-------------------------------------------get product by gender-----------------------------------------
 
 router.get("/gender/:gend", async (req: Request, res: Response) => {
   try {
@@ -39,7 +38,7 @@ router.get("/gender/:gend", async (req: Request, res: Response) => {
   }
 });
 
-//--------------------get product by category----------------------------------
+//------------------------------------------get product by category----------------------------------
 router.get("/category/:cat", async (req: Request, res: Response) => {
   try {
     const clothes = await Products.find({ category:req.params.cat});
@@ -51,7 +50,7 @@ router.get("/category/:cat", async (req: Request, res: Response) => {
     res.status(500)
   }
 });
-//--------------------get product by color----------------------------------
+//---------------------------------------------get product by color----------------------------------
 router.get("/color/:col", async (req: Request, res: Response) => {
   try {
     const clothes = await Products.find({ color:req.params.col});
@@ -63,7 +62,7 @@ router.get("/color/:col", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-//--------------------get product by id----------------------------------
+//-----------------------------------------------get product by id----------------------------------
 router.get("/one/:id", async (req: Request, res: Response) => {
   try {
     const clothes = await Products.findOne({ _id:req.params.id});
@@ -75,7 +74,7 @@ router.get("/one/:id", async (req: Request, res: Response) => {
     res.status(500)
   }
 });
-//-------------------post product---------------------------------------------- 
+//----------------------------------------------post product---------------------------------------------- 
 router.post("/", authenticate, authorizeAdmin, async (req: Request, res: Response) => {
   try {
     const { image, name, quantity, price, gender, category, description } = req.body;
@@ -87,7 +86,7 @@ router.post("/", authenticate, authorizeAdmin, async (req: Request, res: Respons
   }
 });
 
-//--------------------update product---------------------------------------------------
+//----------------------------------------------update product---------------------------------------------------
 router.put("/:id", authenticate, authorizeAdmin, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -102,7 +101,7 @@ router.put("/:id", authenticate, authorizeAdmin, async (req: Request, res: Respo
   }
 });
 
-//----------------------------- delete product -------------------------------------------------------
+//----------------------------- -----------------delete product -------------------------------------------------------
 router.delete("/:id", authenticate, authorizeAdmin, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

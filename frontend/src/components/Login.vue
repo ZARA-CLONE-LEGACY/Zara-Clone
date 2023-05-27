@@ -48,7 +48,6 @@ export default defineComponent({
           email: this.email,
           password: this.password,
         };
-
         const res = await axios.post('http://localhost:3000/login', user, {
           headers: {
             'Content-Type': 'application/json',
