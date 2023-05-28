@@ -1,11 +1,12 @@
 <template>
     <div>
-      <h1>kid Collections</h1>
+      
       <div class="collection-grid">
         <div v-for="item in kidData" :key="item._id" class="collection-box">
-            <img :src="item.image" :alt="item.name" @click="(navigate(item._id))  " />
-            <h2>{{ item.name }}</h2>
+            <img :src="item.image" :alt="item.name" @click="(navigate(item._id))  " class="ddd"/>
+            <h2  class="dd" >{{ item.name }}</h2>
         </div>
+        <h1 class="bo" >kid Collections</h1>
       </div>
     </div>
   </template>
@@ -61,6 +62,35 @@
   
   
   
- 
+ <style> 
+
+.ddd{
+
+
+  height: 500px;
+width: 350px;
+margin-left: 510px;
+margin-top: 230px;
+object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.ddd:hover {
+  transform: scale(1.05);
+}
+.dd{
+  margin-left: 530px;
+
+}
+.bo {
+  position: relative;
+  top: -3850px;
+  left: 580px;
+  font-size: 30px;
+  color: #333;
+  margin-top: -10px;
+}
+</style>
   
   

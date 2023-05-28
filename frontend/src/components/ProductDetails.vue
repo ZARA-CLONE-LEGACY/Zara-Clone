@@ -1,16 +1,39 @@
+
+
 <template>
-  <div class="product-details">
-    <h2>{{ product.name }}</h2>
-    <img :src="product.image" />
-    <p>{{ product.price }} TND</p>
+
+  <div style=" margin-top: 4px;" >
+  <div class="product-details"  >
+    
+    <img :src="product.image" class="fof" />
+ 
+    <h2 style=" font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 40px; margin-top : -400px ; margin-left: 1000px;" >{{ product.name }}</h2>
+      <p  style="margin-left: 1000px; margin-top: 20px;" >{{ product.price }} TND</p>
+  <h1> Materials care and origin  </h1>
+    <h3 style="  word-wrap: break-word; margin-left: 1000px; font-size: 15px; " >Lapelless blazer made of a linen blend fabric. Long sleeves. Flap pockets on the front. Tie belt in the same fabric. Matching lining. Double-breasted fastening with hidden button.</h3>
+            <br />
+
+
     <p>{{ product.quantity }}</p>
-    <p>{{ product.description }}</p>
+    <p style="  word-wrap: break-word; margin-right : 900px ; margin-left: 5px; margin-top: -90px; font-size: 14px;" >{{ product.description }}</p>
     <ul>
-      <li v-for="size in product.sizes" :key="size">{{ size }}</li>
-    </ul>
-    <button @click="add">Add to Bag</button>
-    <p>Rate the product:</p>
-    <form class="star-rating">
+      <li v-for="size in product.sizes" :key="size">{{ size }}</li>        </ul>
+      <select name="" id="prodsize"  style="margin-left: 1000px; margin-top: -400px;">
+              <option value="null">Select your size</option>
+              <option value="EU 36 (UK 29)">EU 36 (UK 29)</option>
+              <option value="EU 38 (UK 38)">EU 38 (UK 38)</option>
+              <option value="EU 40 (UK 40)">EU 40 (UK 40)</option>
+              <option value="EU 42 (UK 42)">EU 42 (UK 42)</option>
+              <option value="EU 44 (UK 34)">EU 44 (UK 34)</option>
+            </select>
+   
+    
+          <button @click="add" class="add-to-bag-button">Add to Bag</button>
+
+    <p  style="margin-left: 20px;">Rate the product:</p>
+    <form class="star-rating" style="margin-left: 160px;">
       <input class="radio-input" type="radio" id="star5" name="star-input" value="5" />
       <label class="radio-label" for="star5" title="5 stars">5 stars</label>
 
@@ -28,6 +51,7 @@
       <p>Product rating: <meter class="average-rating" min="0" max="5" value="4.3" title="4.3 out of 5 stars">4.3 out of 5</meter></p>
     </form>
   </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -148,7 +172,8 @@ async function add(): Promise<void> {
 .radio-input:checked ~ .radio-label:hover,
 .radio-input:checked ~ .radio-label:hover ~ .radio-label,
 .radio-label:hover ~ .radio-input:checked ~ .radio-label {
-  color: darkgoldenrod;
+  color: rgb(209, 153, 11);
+
 }
 
 
@@ -177,4 +202,39 @@ async function add(): Promise<void> {
 form {
   margin: 0 0 50px;
 }
-</style>
+li {
+  list-style: none;
+  margin-bottom: 5px;
+}
+
+select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 14px;
+  width:200px;
+  margin-bottom: 10px;
+}
+
+option {
+  font-size: 14px;
+}
+.fof {
+margin-top: 140px;
+  width: 350px;
+  height : 450px;
+  margin-left: 600px;
+}
+
+.add-to-bag-button {
+  background-color: black;
+  color: white;
+  padding: 10px 60px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 1000px;
+}
+
+</style> 
