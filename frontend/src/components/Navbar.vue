@@ -5,15 +5,15 @@
 
 <div></div>
   <router-link to="./Dashboard">
-            <p class="button" v-if="isAdmin" id="dash" style="margin-left: 1200px; margin-top: -16px; cursor: pointer;">DASHBOARD</p>
+            <p class="button" v-if="isAdmin" id="dash" style="margin-left: 1200px; margin-top: -10px; cursor: pointer;">DASHBOARD</p>
           </router-link>
-          <div v-if="userName">
+          <div v-if="userName" style="margin-top:-10px;" >
             <div class="dropdown">
               <p class="button" id="un" @click="toggleDropdown"  style="margin-left: 1200px;cursor: pointer; " >
                  {{ userName }}
               </p>
               <a class="dropdown-menu" v-if="isDropdownOpen">
-                <a id="out" @click="handleLogout" style="margin-left: 1200px; cursor: pointer;"  > Logout</a>
+                <a id="out" @click="handleLogout" style="margin-left: 1200px; margin-top: 40px; cursor: pointer;"  > Logout</a>
               </a>
             </div>
           </div>
@@ -115,16 +115,16 @@
               </p>
             </div>
             <li class="menuOption" style="margin-top: -20px; fontsize: 20px;">NEW</li>
-            <div class="menuOption" v-if="display">
+            <div class="menuOption" style="margin-left: -250px;"  v-if="display">
               <Men/>
             </div>
-            <div class="menuOption" v-if="show">
+            <div class="menuOption"  style="margin-left: -250px;" v-if="show">
               <Woman />
             </div>
-            <div class="menuOption" v-if="showKid">
+            <div class="menuOption"  style="margin-left: -250px;" v-if="showKid">
               <Kid/>
             </div>
-            <div class="menuOption" v-if="showBeauty" style="text-decoration: none; cursor: default;">
+            <div class="menuOption"  style="margin-left: -250px;" v-if="showBeauty">
               <Beauty />
             </div>
             <div id="menuExtraOptions">
