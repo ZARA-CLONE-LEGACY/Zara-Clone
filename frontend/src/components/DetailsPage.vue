@@ -1,10 +1,13 @@
 <template>
-    <div>
-      <h1>Product Details</h1>
+    <div class="ff">
+      <h1 style="color : white">Product Details</h1>
       <template v-if="item">
         <div class="grid-container">
-          <div class="image-container">
-            <img :src="item.image" :alt="item.name" />
+
+         
+          <div class="image-container"  style="margin-top: 150px;" >
+            <h1 class="h"> Product Details </h1>
+            <img :src="item.image" :alt="item.name"  class="img" />
           </div>
           <div class="details-container">
             <h2>{{ item.name }}</h2>
@@ -13,13 +16,13 @@
             <p>Description: {{ item.description }}</p>
             <div class="button-container">
             <router-link :to="`/UpdateProduct?itemId=${item._id}&collection=${collection}`" v-if="isAdmin">
-               <button class="update-button">Update Product</button>
+               <button class="buttondd">Update Product</button>
             </router-link>
-              <button class="delete-button" v-if="isAdmin" @click="handleDelete">
+              <button class="buttondd" v-if="isAdmin" @click="handleDelete">
                 Delete Product
               </button>
               <router-link :to="`/Add?collection=${collection}`" v-if="isAdmin">
-                <button class="add-button">Add Product</button>
+                <button class="buttondd">Add Product</button>
               </router-link>
             </div>
           </div>
@@ -108,4 +111,58 @@
     },
   });
   </script>
-  
+  <style>
+
+.ff {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.buttondd {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 15px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  margin-right: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.buttondd:hover {
+  background-color: #333;
+}
+
+
+.h {
+  text-align: center;
+  margin: 30px 0;
+  font-size: 40px;
+  margin-top: 50px;
+}
+
+.img {
+  display: block;
+  margin: 0 auto;
+  height: 400px;
+  width: 420px;
+  margin-left: -140px;
+  margin-top: 50px;
+}
+
+p {
+  margin: 10px 0;
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  margin-left: -140px;
+}
+.button-container {
+  margin-left: -120px;
+}
+
+</style>

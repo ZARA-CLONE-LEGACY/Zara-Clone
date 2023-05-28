@@ -8,11 +8,11 @@
       @input="handleSearch"
     />
 
-    <div v-if="filteredItems !== null" v-for="result in filteredItems" :key="result.productId">
+    <div v-if="filteredItems !== null" v-for="result in filteredItems" :key="result.productId" class="res">
       <img
         :src="result.image"
         alt="image"
-        style="width: 230px; height: 350px"
+        style="width: 280px; height: 420px"
       />
       <div>Product Name: {{ result.name }}</div>
       <div>Product Price: {{ result.price }}</div>
@@ -86,5 +86,11 @@ created() {
 .searchbar::placeholder {
   color: rgb(30, 80, 95);
   margin-bottom: 20px;
+}
+
+.res {
+
+  margin-left: 540px;
+  margin-top: 150px;
 }
 </style>

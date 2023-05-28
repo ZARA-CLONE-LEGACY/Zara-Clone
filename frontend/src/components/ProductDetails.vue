@@ -1,4 +1,7 @@
-<template>
+
+<template></template>
+
+<!-- <template>
   <div class="product-details">
     <h2>{{ product.name }}</h2>
     <img :src="product.image" />
@@ -177,4 +180,4 @@ async function add(): Promise<void> {
 form {
   margin: 0 0 50px;
 }
-</style>
+</style> -->

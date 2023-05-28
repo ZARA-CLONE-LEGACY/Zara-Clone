@@ -1,4 +1,7 @@
-<template>
+<template></template>
+
+
+<!-- <template>
     <div>
       <div v-if="data.length === 0">
         <p>Cart is Empty</p>
@@ -73,4 +76,4 @@
     },
   });
   </script>
-  
+   -->
